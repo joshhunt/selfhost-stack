@@ -1,7 +1,10 @@
 services:
+  #
+  # Prowlarr - index aggregator
+  #
   prowlarr:
     container_name: prowlarr
-    image: linuxserver/prowlarr:nightly
+    image: linuxserver/prowlarr:latest
     ports:
       - 9696:9696
     environment:
@@ -10,15 +13,129 @@ services:
       - TZ=$TZ
       - UMASK=002
     volumes:
-      - $DOCKER_PATH/prowlarr:/config
+      - $CONFIG_PATH/prowlarr:/config:rw
     labels:
-      - autoheal="true"
+      - autoheal=true
     healthcheck:
       test: curl -fSs http://127.0.0.1:9696 > /dev/null || exit 1
       start_period: 20s
       timeout: 5s
       interval: 5s
       retries: 3
+    restart: unless-stopped
 
-  # Radarr - Movies
-  # empty comment
+  #
+  # Radarr - Movies Search
+  #
+  radarr:
+    container_name: radarr
+    image: linuxserver/radarr:latest
+    ports:
+      - 7878:7878
+    environment:
+      - UMASK_SET=22
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+    volumes:
+      - $CONFIG_PATH/radarr:/config
+      - $DATA_PATH:/data
+    labels:
+      - autoheal=true
+    healthcheck:
+      test: curl -fSs http://127.0.0.1:7878 > /dev/null || exit 1
+      start_period: 20s
+      timeout: 5s
+      interval: 5s
+      retries: 3
+    restart: unless-stopped
+    entrypoint:
+      - /init
+    depends_on:
+      sabnzbd:
+        condition: service_healthy
+
+  #
+  # Sonarr - Show Search
+  #
+  sonarr:
+    container_name: sonarr
+    image: linuxserver/sonarr:latest
+    ports:
+      - 8989:8989
+    environment:
+      - UMASK_SET=22
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+    volumes:
+      - $CONFIG_PATH/sonarr:/config
+      - $DATA_PATH:/data
+    labels:
+      - autoheal=true
+    healthcheck:
+      test: curl -fSs http://127.0.0.1:8989 || exit 1
+      start_period: 90s
+      timeout: 5s
+      interval: 5s
+      retries: 3
+    restart: "unless-stopped"
+    entrypoint:
+      - /init
+    depends_on:
+      sabnzbd:
+        condition: service_healthy
+
+  #
+  # Bazarr - subtitles search
+  #
+  bazarr:
+    container_name: bazarr
+    image: linuxserver/bazarr:latest
+    ports:
+      - 6767:6767
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+      - UMASK_SET=022 #optional
+    volumes:
+      - $CONFIG_PATH/bazarr:/config
+      - $DATA_PATH:/data
+    labels:
+      - autoheal=true
+    healthcheck:
+      test: curl -fSs http://127.0.0.1:6767 > /dev/null || exit 1
+      start_period: 60s
+      timeout: 5s
+      interval: 5s
+      retries: 3
+    restart: unless-stopped
+    # mem_limit: 300M
+    # mem_reservation: 250M
+
+  #
+  # Sabnzbd - Usenet downloader
+  #
+  sabnzbd:
+    container_name: sabnzbd
+    image: linuxserver/sabnzbd
+    ports:
+      - 8080:8080
+      - 9090:9090
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+    volumes:
+      - $CONFIG_PATH/sabnzbd:/config
+      - $DATA_PATH:/data
+    labels:
+      - autoheal=true
+    healthcheck:
+      test: curl -fSs 127.0.0.1:8080 > /dev/null || exit 1
+      start_period: 20s
+      interval: 5s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
