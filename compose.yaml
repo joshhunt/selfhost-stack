@@ -1,3 +1,6 @@
+networks:
+  download-clients:
+
 services:
   #
   # Prowlarr - index aggregator
@@ -40,6 +43,8 @@ services:
     volumes:
       - $CONFIG_PATH/radarr:/config
       - $DATA_PATH:/data
+    networks:
+      - download-clients
     labels:
       - autoheal=true
     healthcheck:
@@ -71,6 +76,8 @@ services:
     volumes:
       - $CONFIG_PATH/sonarr:/config
       - $DATA_PATH:/data
+    networks:
+      - download-clients
     labels:
       - autoheal=true
     healthcheck:
@@ -130,6 +137,8 @@ services:
     volumes:
       - $CONFIG_PATH/sabnzbd:/config
       - $DATA_PATH:/data
+    networks:
+      - download-clients
     labels:
       - autoheal=true
     healthcheck:
