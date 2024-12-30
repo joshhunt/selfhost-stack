@@ -1,6 +1,6 @@
 # Define variables
 $remoteServer = "josh@trevor.local"    # Replace with your remote server details
-$remoteRepoPath = "/path/to/remote/repo" # Replace with your remote repository path
+$remoteRepoPath = "/Users/josh/selfhost-stack" # Replace with your remote repository path
 $branch = "main"                        # Replace with your branch name if different
 
 # Step 1: Do the git push
