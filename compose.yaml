@@ -1,0 +1,23 @@
+services:
+  prowlarr:
+    container_name: prowlarr
+    image: linuxserver/prowlarr:nightly
+    ports:
+      - 9696:9696
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+      - UMASK=002
+    volumes:
+      - $DOCKER_PATH/prowlarr:/config
+    labels:
+      - autoheal="true"
+    healthcheck:
+      test: curl -fSs http://127.0.0.1:9696 > /dev/null || exit 1
+      start_period: 20s
+      timeout: 5s
+      interval: 5s
+      retries: 3
+
+  # Radarr - Movies
