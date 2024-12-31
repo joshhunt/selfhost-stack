@@ -148,3 +148,14 @@ services:
       timeout: 5s
       retries: 3
     restart: unless-stopped
+
+  adguardhome:
+    image: adguard/adguardhome
+    ports:
+      - 53:53/tcp # plain dns over tcp
+      - 53:53/udp # plain dns over udp
+      - 80:80/tcp # http web interface
+      - 3000:3000/tcp # initial setup web interface
+    volumes:
+      - $CONFIG_PATH/adguardhome/config:/opt/adguardhome/conf # app configuration
+      - $CONFIG_PATH/adguardhome/work:/opt/adguardhome/work # app working directory
