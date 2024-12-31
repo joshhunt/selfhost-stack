@@ -29,8 +29,10 @@ services:
     networks:
       - traefik
     labels:
-      - "traefik.http.routers.prowlarr.rule=Host(`prowlarr.trtr.co`)"
+      - "traefik.enable=true"
       - "traefik.docker.network=traefik"
+      - "traefik.http.routers.prowlarr.entrypoints=websecure"
+      - "traefik.http.routers.prowlarr.rule=Host(`prowlarr.trtr.co`)"
     healthcheck:
       test: curl -fSs http://127.0.0.1:9696 > /dev/null || exit 1
       start_period: 20s
@@ -98,8 +100,10 @@ services:
       - traefik
       - overseerr
     labels:
-      - "traefik.http.routers.sonarr.rule=Host(`sonarr.trtr.co`)"
+      - "traefik.enable=true"
       - "traefik.docker.network=traefik"
+      - "traefik.http.routers.sonarr.entrypoints=websecure"
+      - "traefik.http.routers.sonarr.rule=Host(`sonarr.trtr.co`)"
     healthcheck:
       test: curl -fSs http://127.0.0.1:8989 || exit 1
       start_period: 90s
@@ -132,8 +136,10 @@ services:
     networks:
       - traefik
     labels:
-      - "traefik.http.routers.bazarr.rule=Host(`bazarr.trtr.co`)"
+      - "traefik.enable=true"
       - "traefik.docker.network=traefik"
+      - "traefik.http.routers.bazarr.entrypoints=websecure"
+      - "traefik.http.routers.bazarr.rule=Host(`bazarr.trtr.co`)"
     healthcheck:
       test: curl -fSs http://127.0.0.1:6767 > /dev/null || exit 1
       start_period: 60s
@@ -164,8 +170,10 @@ services:
       - download-clients
       - traefik
     labels:
-      - "traefik.http.routers.sabnzbd.rule=Host(`sabnzbd.trtr.co`)"
+      - "traefik.enable=true"
       - "traefik.docker.network=traefik"
+      - "traefik.http.routers.sab.entrypoints=websecure"
+      - "traefik.http.routers.sab.rule=Host(`sab.trtr.co`)"
     healthcheck:
       test: curl -fSs 127.0.0.1:8080 > /dev/null || exit 1
       start_period: 20s
@@ -187,8 +195,10 @@ services:
       - overseerr
       - traefik
     labels:
-      - "traefik.http.routers.overseerr.rule=Host(`overseerr.trtr.co`)"
+      - "traefik.enable=true"
       - "traefik.docker.network=traefik"
+      - "traefik.http.routers.overseerr.entrypoints=websecure"
+      - "traefik.http.routers.overseerr.rule=Host(`grab.trtr.co`)"
     restart: unless-stopped
 
   adguardhome:
@@ -201,8 +211,8 @@ services:
       - "53:53/udp"
       # AdGuard Home Admin Panel as well as DNS-over-HTTPS
       # - "81:81/tcp" - exposed by traefik now
-      # - "443:443/tcp"
-      - "443:443/udp"
+      # - "443:443/tcp" - taken by traefik now
+      # - "443:443/udp" - ?
       # - "3000:3000/tcp"
       # DNS-over-TLS
       - "853:853/tcp"
@@ -216,8 +226,10 @@ services:
     networks:
       - traefik
     labels:
-      - "traefik.http.routers.adguardhome.rule=Host(`adguard.trtr.co`)"
+      - "traefik.enable=true"
       - "traefik.docker.network=traefik"
+      - "traefik.http.routers.adguardhome.entrypoints=websecure"
+      - "traefik.http.routers.adguardhome.rule=Host(`adguard.trtr.co`)"
       - "traefik.http.services.adguardhome.loadbalancer.server.port=81"
     volumes:
       - $CONFIG_PATH/adguardhome/config:/opt/adguardhome/conf # app configuration
@@ -261,7 +273,6 @@ services:
 
   whoami:
     container_name: whoami
-    # A container that exposes an API to show its IP address
     image: traefik/whoami
     networks:
       - traefik
