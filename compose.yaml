@@ -10,12 +10,14 @@ include:
   - services/whoami.yaml
 
 networks:
-  download-clients:
-    name: download-clients
+  sabnzbd:
+    name: sabnzbd
   traefik:
     name: traefik
   overseerr:
     name: overseerr
+  bazarr:
+    name: bazarr
 
 secrets:
   cloudflare-api-key:

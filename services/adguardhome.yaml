@@ -1,11 +1,11 @@
+#
+# AdGuard Home - DNS server/filtering
+#
+
 services:
-  #
-  # AdGuard Home - DNS filtering
-  #
   adguardhome:
     container_name: adguardhome
     image: adguard/adguardhome
-    # network_mode: "host"
     ports:
       # Plain DNS
       - "53:53/tcp"

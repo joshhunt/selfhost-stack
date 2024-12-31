@@ -20,15 +20,21 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 # Step 3: SSH into the remote server and perform a git pull
-$remoteCommand = @"
+$remotePullCommand = @"
 cd $remoteRepoPath && git pull origin $branch
 "@
 
 Write-Host "Connecting to remote server to perform git pull..."
-ssh $remoteServer $remoteCommand
+ssh $remoteServer $remotePullCommand
 if ($LASTEXITCODE -ne 0) {
     Write-Error "Git pull on remote server failed. Exiting script."
     exit $LASTEXITCODE
 }
 
 Write-Host "Git commit, push, and pull operations completed successfully."
+
+$remoteDockerCommand = @"
+cd $remoteRepoPath && /usr/local/bin/docker-compose up -d && /usr/local/bin/docker-compose logs -f
+"@
+
+ssh $remoteServer $remoteDockerCommand

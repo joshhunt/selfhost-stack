@@ -16,9 +16,10 @@ services:
       - $CONFIG_PATH/sonarr:/config
       - $DATA_PATH:/data
     networks:
-      - download-clients
+      - sabnzbd
       - traefik
       - overseerr
+      - bazarr
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik"

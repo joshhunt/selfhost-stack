@@ -16,7 +16,7 @@ services:
       - $CONFIG_PATH/sabnzbd:/config
       - $DATA_PATH:/data
     networks:
-      - download-clients
+      - sabnzbd
       - traefik
     labels:
       - "traefik.enable=true"

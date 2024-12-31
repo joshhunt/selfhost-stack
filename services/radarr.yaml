@@ -14,8 +14,9 @@ services:
       - $CONFIG_PATH/radarr:/config
       - $DATA_PATH:/data
     networks:
-      - download-clients
+      - sabnzbd
       - traefik
+      - bazarr
       - overseerr
     labels:
       - "traefik.enable=true"
