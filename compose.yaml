@@ -1,5 +1,8 @@
 networks:
   download-clients:
+    name: download-clients
+  traefik:
+    name: traefik
 
 services:
   #
@@ -45,6 +48,7 @@ services:
       - $DATA_PATH:/data
     networks:
       - download-clients
+      - traefik
     labels:
       - autoheal=true
       - "traefik.http.routers.radarr.rule=Host(`radarr.trtr.co`)"
@@ -177,12 +181,14 @@ services:
       - $CONFIG_PATH/adguardhome/config:/opt/adguardhome/conf # app configuration
       - $CONFIG_PATH/adguardhome/work:/opt/adguardhome/work # app working directory
 
-  reverse-proxy:
-    container_name: reverse-proxy
+  traefik:
+    container_name: traefik
     # The official v3 Traefik docker image
     image: traefik:v3.2
     # Enables the web UI and tells Traefik to listen to docker
     command: --api.insecure=true --providers.docker
+    networks:
+      - traefik
     ports:
       # The HTTP port
       - "80:80"
