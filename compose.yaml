@@ -7,10 +7,8 @@ networks:
     name: overseerr
 
 secrets:
-  porkbun-api-key:
-    file: $CONFIG_PATH/secrets/porkbun_api_key.txt
-  porkbun-secret-key:
-    file: $CONFIG_PATH/secrets/porkbun_secret_key.txt
+  cloudflare-api-key:
+    file: $CONFIG_PATH/secrets/cloudflare-selfhost-stack-letsencrypt-trtrr-dot-co.txt
 
 services:
   #
@@ -238,7 +236,7 @@ services:
       - "--entrypoints.websecure.address=:443"
       - "--entrypoints.websecure.http.tls.domains[0].main=*.trtr.co"
       - "--certificatesresolvers.wildcard.acme.dnschallenge=true"
-      - "--certificatesresolvers.wildcard.acme.dnschallenge.provider=porkbun"
+      - "--certificatesresolvers.wildcard.acme.dnschallenge.provider=cloudflare"
       - "--certificatesresolvers.wildcard.acme.email=letsencrypt@trtr.co"
       - "--certificatesresolvers.wildcard.acme.storage=/letsencrypt/acme.json"
       - "--certificatesresolvers.wildcard.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
@@ -254,11 +252,9 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - $CONFIG_PATH/traefik/letsencrypt:/letsencrypt
     environment:
-      - PORKBUN_API_KEY_FILE=/run/secrets/porkbun-api-key
-      - PORKBUN_SECRET_API_KEY_FILE=/run/secrets/porkbun-secret-key
+      - CF_DNS_API_TOKEN_FILE=/run/secrets/cloudflare-api-key
     secrets:
-      - porkbun-api-key
-      - porkbun-secret-key
+      - cloudflare-api-key
 
   whoami:
     container_name: whoami
