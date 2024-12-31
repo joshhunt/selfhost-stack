@@ -33,8 +33,8 @@ services:
   radarr:
     container_name: radarr
     image: linuxserver/radarr:latest
-    ports:
-      - 7878:7878
+    # ports:
+    #   - 7878:7878
     environment:
       - UMASK_SET=22
       - PUID=$PUID
@@ -47,6 +47,7 @@ services:
       - download-clients
     labels:
       - autoheal=true
+      - "traefik.http.routers.radarr.rule=Host(`radarr.trtr.co`)"
     healthcheck:
       test: curl -fSs http://127.0.0.1:7878 > /dev/null || exit 1
       start_period: 20s
