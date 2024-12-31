@@ -251,7 +251,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - $CONFIG_PATH/traefik/letsencrypt:/letsencrypt
     environment:
-      - PORKBUN_API_KEY_KEY_FILE=/run/secrets/porkbun-api-key
+      - PORKBUN_API_KEY_FILE=/run/secrets/porkbun-api-key
       - PORKBUN_SECRET_API_KEY_FILE=/run/secrets/porkbun-secret-key
     secrets:
       - porkbun-api-key
