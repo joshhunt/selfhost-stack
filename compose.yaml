@@ -160,3 +160,4 @@ services:
     volumes:
       - $CONFIG_PATH/adguardhome/config:/opt/adguardhome/conf # app configuration
       - $CONFIG_PATH/adguardhome/work:/opt/adguardhome/work # app working directory
+    network_mode: "host"
