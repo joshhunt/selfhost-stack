@@ -189,7 +189,7 @@ services:
     networks:
       - traefik
     labels:
-      - "traefik.http.routers.adguardhome.rule=Host(`adguardhome.trtr.co`)"
+      - "traefik.http.routers.adguardhome.rule=Host(`adguard.trtr.co`)"
       - "traefik.docker.network=traefik"
       - "traefik.http.services.adguardhome.loadbalancer.server.port=81"
     volumes:
