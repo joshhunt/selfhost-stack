@@ -48,6 +48,7 @@ services:
     labels:
       - autoheal=true
       - "traefik.http.routers.radarr.rule=Host(`radarr.trtr.co`)"
+      - "traefik.http.services.radarr.loadbalancer.server.port=7878"
     healthcheck:
       test: curl -fSs http://127.0.0.1:7878 > /dev/null || exit 1
       start_period: 20s
