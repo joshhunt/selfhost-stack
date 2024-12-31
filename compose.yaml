@@ -207,7 +207,7 @@ services:
     image: traefik/whoami
     networks:
       - download-clients
-      - traefik
+      # - traefik
     labels:
       - "traefik.http.routers.foobar.rule=Host(`whoami.trtr.co`)"
       - "traefik.docker.network=traefik"
