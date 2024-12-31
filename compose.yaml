@@ -198,8 +198,8 @@ services:
     volumes:
       # So that Traefik can listen to the Docker events
       - /var/run/docker.sock:/var/run/docker.sock
-    labels:
-      - "traefik.docker.network=traefik"
+    # labels:
+    #   - "traefik.docker.network=traefik"
 
   whoami:
     container_name: whoami
