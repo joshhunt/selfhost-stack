@@ -268,5 +268,4 @@ services:
       - "traefik.http.routers.whoami.rule=Host(`whoami.trtr.co`)"
       - "traefik.http.routers.whoami.tls.certresolver=wildcard"
       - "traefik.http.routers.whoami.entrypoints=websecure"
-      - "traefik.http.routers.whoami.tls.domains[0].main=https.mini.trtr.co"
-      - "traefik.http.routers.whoami.tls.domains[0].sans=*.trtr.co"
+      - "traefik.http.routers.whoami.tls.domains[0].main=*.trtr.co"
