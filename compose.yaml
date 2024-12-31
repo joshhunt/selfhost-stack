@@ -60,10 +60,12 @@ services:
       - traefik
       - overseerr
     labels:
-      - "traefik.http.routers.radarr.rule=Host(`radarr.trtr.co`)"
-      # - "traefik.http.routers.radarr.tls.certresolver=wildcard"
-      # - "traefik.http.routers.radarr.entrypoints=websecure"
+      - "traefik.enable=true"
       - "traefik.docker.network=traefik"
+      - "traefik.http.routers.radarr.entrypoints=websecure"
+      - "traefik.http.routers.radarr.tls.certresolver=wildcard"
+      - "traefik.http.routers.radarr.tls.domains[0].main=*.trtr.co"
+      - "traefik.http.routers.radarr.rule=Host(`radarr.trtr.co`)"
     healthcheck:
       test: curl -fSs http://127.0.0.1:7878 > /dev/null || exit 1
       start_period: 20s
@@ -266,7 +268,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik"
-      - "traefik.http.routers.whoami.rule=Host(`whoami.trtr.co`)"
-      - "traefik.http.routers.whoami.tls.certresolver=wildcard"
       - "traefik.http.routers.whoami.entrypoints=websecure"
+      - "traefik.http.routers.whoami.tls.certresolver=wildcard"
       - "traefik.http.routers.whoami.tls.domains[0].main=*.trtr.co"
+      - "traefik.http.routers.whoami.rule=Host(`whoami.trtr.co`)"
