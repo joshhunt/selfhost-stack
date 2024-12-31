@@ -43,8 +43,8 @@ services:
     volumes:
       - $CONFIG_PATH/radarr:/config
       - $DATA_PATH:/data
-    # networks:
-    #   - download-clients
+    networks:
+      - download-clients
     labels:
       - autoheal=true
       - "traefik.http.routers.radarr.rule=Host(`radarr.trtr.co`)"
