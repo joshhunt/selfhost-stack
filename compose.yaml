@@ -3,6 +3,8 @@ networks:
     name: download-clients
   traefik:
     name: traefik
+  overseerr:
+    name: overseerr
 
 services:
   #
@@ -52,6 +54,7 @@ services:
     networks:
       - download-clients
       - traefik
+      - overseerr
     labels:
       - "traefik.http.routers.radarr.rule=Host(`radarr.trtr.co`)"
       - "traefik.docker.network=traefik"
@@ -87,6 +90,7 @@ services:
     networks:
       - download-clients
       - traefik
+      - overseerr
     labels:
       - "traefik.http.routers.sonarr.rule=Host(`sonarr.trtr.co`)"
       - "traefik.docker.network=traefik"
@@ -162,6 +166,23 @@ services:
       interval: 5s
       timeout: 5s
       retries: 3
+    restart: unless-stopped
+
+  overseerr:
+    image: lscr.io/linuxserver/overseerr:latest
+    container_name: overseerr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - $CONFIG_PATH/overseerr:/config
+    networks:
+      - overseerr
+      - traefik
+    labels:
+      - "traefik.http.routers.overseerr.rule=Host(`overseerr.trtr.co`)"
+      - "traefik.docker.network=traefik"
     restart: unless-stopped
 
   adguardhome:
