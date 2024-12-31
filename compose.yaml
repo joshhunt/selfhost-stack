@@ -237,6 +237,7 @@ services:
       - "--entrypoints.websecure.http.tls.domains[0].main=*.trtr.co"
       - "--certificatesresolvers.wildcard.acme.dnschallenge=true"
       - "--certificatesresolvers.wildcard.acme.dnschallenge.provider=cloudflare"
+      - "--certificatesresolvers.wildcard.acme.dnschallenge.resolvers=1.1.1.1:53"
       - "--certificatesresolvers.wildcard.acme.email=letsencrypt@trtr.co"
       - "--certificatesresolvers.wildcard.acme.storage=/letsencrypt/acme.json"
       - "--certificatesresolvers.wildcard.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
