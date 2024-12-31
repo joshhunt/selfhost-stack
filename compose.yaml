@@ -6,6 +6,12 @@ networks:
   overseerr:
     name: overseerr
 
+secrets:
+  porkbun-api-key:
+    file: $CONFIG_PATH/secrets/porkbun_api_key.txt
+  porkbun-secret-key:
+    file: $CONFIG_PATH/secrets/porkbun_secret_key.txt
+
 services:
   #
   # Prowlarr - index aggregator
@@ -57,6 +63,8 @@ services:
       - overseerr
     labels:
       - "traefik.http.routers.radarr.rule=Host(`radarr.trtr.co`)"
+      # - "traefik.http.routers.radarr.tls.certresolver=wildcard"
+      # - "traefik.http.routers.radarr.entrypoints=websecure"
       - "traefik.docker.network=traefik"
     healthcheck:
       test: curl -fSs http://127.0.0.1:7878 > /dev/null || exit 1
@@ -219,22 +227,35 @@ services:
 
   traefik:
     container_name: traefik
-    # The official v3 Traefik docker image
     image: traefik:v3.2
     # Enables the web UI and tells Traefik to listen to docker
-    command: --api.insecure=true --providers.docker
+    command:
+      - "--providers.docker"
+      - "--api.insecure=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.websecure.http.tls.domains[0].main=*.trtr.co"
+      - "--certificatesresolvers.wildcard.acme.dnschallenge=true"
+      - "--certificatesresolvers.wildcard.acme.dnschallenge.provider=porkbun"
+      - "--certificatesresolvers.wildcard.acme.email=letsencrypt@trtr.co"
+      - "--certificatesresolvers.wildcard.acme.storage=/letsencrypt/acme.json"
     networks:
       - traefik
     ports:
-      # The HTTP port
+      # Web server ports
       - "80:80"
+      - "443:443"
       # The Web UI (enabled by --api.insecure=true)
       - "8081:8080"
     volumes:
-      # So that Traefik can listen to the Docker events
       - /var/run/docker.sock:/var/run/docker.sock
-    # labels:
-    #   - "traefik.docker.network=traefik"
+      - $CONFIG_PATH/traefik/letsencrypt:/letsencrypt
+    environment:
+      - PORKBUN_API_KEY_KEY_FILE=/run/secrets/porkbun-api-key
+      - PORKBUN_SECRET_API_KEY_FILE=/run/secrets/porkbun-secret-key
+    secrets:
+      - porkbun-api-key
+      - porkbun-secret-key
 
   whoami:
     container_name: whoami
@@ -243,5 +264,7 @@ services:
     networks:
       - traefik
     labels:
-      - "traefik.http.routers.foobar.rule=Host(`whoami.trtr.co`)"
       - "traefik.docker.network=traefik"
+      - "traefik.http.routers.whoami.rule=Host(`whoami.trtr.co`)"
+      - "traefik.http.routers.whoami.tls.certresolver=wildcard"
+      - "traefik.http.routers.whoami.entrypoints=websecure"
