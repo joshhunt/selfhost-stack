@@ -242,7 +242,7 @@ services:
       - "--certificatesresolvers.wildcard.acme.dnschallenge.resolvers=1.1.1.1:53"
       - "--certificatesresolvers.wildcard.acme.email=letsencrypt@trtr.co"
       - "--certificatesresolvers.wildcard.acme.storage=/letsencrypt/acme.json"
-      - "--certificatesresolvers.wildcard.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+      # - "--certificatesresolvers.wildcard.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
     networks:
       - traefik
     ports:
