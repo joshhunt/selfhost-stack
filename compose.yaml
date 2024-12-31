@@ -150,6 +150,7 @@ services:
     restart: unless-stopped
 
   adguardhome:
+    container_name: adguardhome
     image: adguard/adguardhome
     ports:
       - 53:53/tcp # plain dns over tcp
