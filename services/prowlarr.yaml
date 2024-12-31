@@ -1,0 +1,28 @@
+services:
+  #
+  # Prowlarr - index aggregator
+  #
+  prowlarr:
+    container_name: prowlarr
+    image: linuxserver/prowlarr:latest
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+      - UMASK=002
+    volumes:
+      - $CONFIG_PATH/prowlarr:/config:rw
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.routers.prowlarr.entrypoints=websecure"
+      - "traefik.http.routers.prowlarr.rule=Host(`prowlarr.trtr.co`)"
+    healthcheck:
+      test: curl -fSs http://127.0.0.1:9696 > /dev/null || exit 1
+      start_period: 20s
+      timeout: 5s
+      interval: 5s
+      retries: 3
+    restart: unless-stopped

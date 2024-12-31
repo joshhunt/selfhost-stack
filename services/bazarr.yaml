@@ -1,0 +1,31 @@
+services:
+  #
+  # Bazarr - subtitles search
+  #
+  bazarr:
+    container_name: bazarr
+    image: linuxserver/bazarr:latest
+    ports:
+      - 6767:6767
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+      - UMASK_SET=022 #optional
+    volumes:
+      - $CONFIG_PATH/bazarr:/config
+      - $DATA_PATH:/data
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.routers.bazarr.entrypoints=websecure"
+      - "traefik.http.routers.bazarr.rule=Host(`bazarr.trtr.co`)"
+    healthcheck:
+      test: curl -fSs http://127.0.0.1:6767 > /dev/null || exit 1
+      start_period: 60s
+      timeout: 5s
+      interval: 5s
+      retries: 3
+    restart: unless-stopped

@@ -1,0 +1,11 @@
+services:
+  whoami:
+    container_name: whoami
+    image: traefik/whoami
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.routers.whoami.entrypoints=websecure"
+      - "traefik.http.routers.whoami.rule=Host(`whoami.trtr.co`)"

@@ -1,0 +1,22 @@
+services:
+  #
+  # Overseerr - Media management
+  #
+  overseerr:
+    image: lscr.io/linuxserver/overseerr:latest
+    container_name: overseerr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - $CONFIG_PATH/overseerr:/config
+    networks:
+      - overseerr
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.routers.overseerr.entrypoints=websecure"
+      - "traefik.http.routers.overseerr.rule=Host(`grab.trtr.co`)"
+    restart: unless-stopped

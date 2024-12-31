@@ -1,0 +1,42 @@
+services:
+  traefik:
+    container_name: traefik
+    image: traefik:v3.2
+    command:
+      # - "--log.level=DEBUG"
+      - "--providers.docker"
+      - "--providers.docker.exposedByDefault=false"
+      - "--api.insecure=true"
+
+      # HTTP server -redirect to HTTPS
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
+
+      # HTTPS server - use wildcard cert
+      - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.websecure.http.tls=true"
+      - "--entrypoints.websecure.http.tls.domains[0].main=*.trtr.co"
+      - "--entrypoints.websecure.http.tls.certresolver=wildcard"
+
+      # LetsEncrypt DNS config
+      - "--certificatesresolvers.wildcard.acme.dnschallenge=true"
+      - "--certificatesresolvers.wildcard.acme.dnschallenge.provider=cloudflare"
+      - "--certificatesresolvers.wildcard.acme.dnschallenge.resolvers=1.1.1.1:53"
+      - "--certificatesresolvers.wildcard.acme.email=letsencrypt@trtr.co"
+      - "--certificatesresolvers.wildcard.acme.storage=/letsencrypt/acme.json"
+      # - "--certificatesresolvers.wildcard.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+    networks:
+      - traefik
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8081:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - $CONFIG_PATH/traefik/letsencrypt:/letsencrypt
+    environment:
+      - CF_DNS_API_TOKEN_FILE=/run/secrets/cloudflare-api-key
+    secrets:
+      - cloudflare-api-key

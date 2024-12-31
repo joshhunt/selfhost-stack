@@ -1,0 +1,32 @@
+services:
+  #
+  # Sabnzbd - Usenet downloader
+  #
+  sabnzbd:
+    container_name: sabnzbd
+    image: linuxserver/sabnzbd
+    ports:
+      - 8080:8080
+      - 9090:9090
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+    volumes:
+      - $CONFIG_PATH/sabnzbd:/config
+      - $DATA_PATH:/data
+    networks:
+      - download-clients
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.routers.sab.entrypoints=websecure"
+      - "traefik.http.routers.sab.rule=Host(`sab.trtr.co`)"
+    healthcheck:
+      test: curl -fSs 127.0.0.1:8080 > /dev/null || exit 1
+      start_period: 20s
+      interval: 5s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
