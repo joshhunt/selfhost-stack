@@ -53,7 +53,7 @@ services:
       - autoheal=true
       - "traefik.http.routers.radarr.rule=Host(`radarr.trtr.co`)"
       - "traefik.http.services.radarr.loadbalancer.server.port=7878"
-      # - "traefik.docker.network=traefik"
+      - "traefik.docker.network=traefik"
     healthcheck:
       test: curl -fSs http://127.0.0.1:7878 > /dev/null || exit 1
       start_period: 20s
@@ -207,7 +207,7 @@ services:
     image: traefik/whoami
     networks:
       - download-clients
-      # - traefik
+      - traefik
     labels:
       - "traefik.http.routers.foobar.rule=Host(`whoami.trtr.co`)"
       - "traefik.docker.network=traefik"
