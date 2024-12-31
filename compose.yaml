@@ -230,7 +230,9 @@ services:
     image: traefik:v3.2
     # Enables the web UI and tells Traefik to listen to docker
     command:
+      - "--log.level=DEBUG"
       - "--providers.docker"
+      - "--providers.docker.exposedByDefault=false"
       - "--api.insecure=true"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
@@ -239,6 +241,7 @@ services:
       - "--certificatesresolvers.wildcard.acme.dnschallenge.provider=porkbun"
       - "--certificatesresolvers.wildcard.acme.email=letsencrypt@trtr.co"
       - "--certificatesresolvers.wildcard.acme.storage=/letsencrypt/acme.json"
+      - "--certificatesresolvers.wildcard.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
     networks:
       - traefik
     ports:
@@ -264,6 +267,7 @@ services:
     networks:
       - traefik
     labels:
+      - "traefik.enable=true"
       - "traefik.docker.network=traefik"
       - "traefik.http.routers.whoami.rule=Host(`whoami.trtr.co`)"
       - "traefik.http.routers.whoami.tls.certresolver=wildcard"
