@@ -206,6 +206,7 @@ services:
     # A container that exposes an API to show its IP address
     image: traefik/whoami
     networks:
+      - download-clients
       - traefik
     labels:
       - "traefik.http.routers.foobar.rule=Host(`whoami.trtr.co`)"
