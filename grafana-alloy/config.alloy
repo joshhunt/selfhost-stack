@@ -1,4 +1,4 @@
 logging {
-  level  = "info"
+  level  = "debug"
   format = "logfmt"
 }
