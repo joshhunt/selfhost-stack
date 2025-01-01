@@ -3,7 +3,7 @@
 #
 services:
   duplicati:
-    image: lscr.io/linuxserver/duplicati:development
+    image: lscr.io/linuxserver/duplicati:latest
     container_name: duplicati
     environment:
       - PUID=$PUID
