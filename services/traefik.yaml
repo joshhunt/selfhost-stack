@@ -19,6 +19,7 @@ services:
       - "--entrypoints.websecure.http.tls=true"
       - "--entrypoints.websecure.http.tls.domains[0].main=*.trtr.co"
       - "--entrypoints.websecure.http.tls.certresolver=wildcard"
+      - "--entrypoints.websecure.http.middlewares=custom-header"
 
       # LetsEncrypt DNS config
       - "--certificatesresolvers.wildcard.acme.dnschallenge=true"
@@ -27,9 +28,6 @@ services:
       - "--certificatesresolvers.wildcard.acme.email=letsencrypt@trtr.co"
       - "--certificatesresolvers.wildcard.acme.storage=/letsencrypt/acme.json"
       # - "--certificatesresolvers.wildcard.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
-
-      # Middleware
-      - "--global.middlewares=custom-header"
     labels:
       - "traefik.http.middlewares.custom-header.headers.customresponseheaders.Custom-Canary-Header=Hello-Josh"
     networks:
