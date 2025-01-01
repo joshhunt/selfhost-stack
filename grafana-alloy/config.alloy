@@ -19,8 +19,8 @@ discovery.docker "default" {
 loki.source.docker "default" {
   host       = "unix:///var/run/docker.sock"
   targets    = discovery.docker.default.targets
-  labels     = {"app" = "docker"}
-  forward_to = []
+  labels     = {"app" = "docker", "job" = "selfhost-stack"}
+  forward_to = [loki.write.default.receiver]
 }
 
 loki.write "default" {
