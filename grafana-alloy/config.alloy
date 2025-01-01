@@ -9,7 +9,7 @@ livedebugging {
 
 local.file "secrets" {
   filename = "/run/secrets/grafana-alloy-secrets-file"
-  is_secret = true
+  // is_secret = true
 }
 
 discovery.docker "default" {
