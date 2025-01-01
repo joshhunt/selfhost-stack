@@ -14,12 +14,10 @@ local.file "token" {
 
 local.file "loki_url" {
   filename = "/run/secrets/grafana-alloy-loki-url"
-  is_secret = true
 }
 
 local.file "loki_user" {
   filename = "/run/secrets/grafana-alloy-loki-user"
-  is_secret = true
 }
 
 discovery.docker "default" {
