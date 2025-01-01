@@ -33,8 +33,8 @@ if ($LASTEXITCODE -ne 0) {
 
 Write-Host "Git commit, push, and pull operations completed successfully."
 
-$remoteDockerCommand = @"
-cd $remoteRepoPath && /usr/local/bin/docker-compose up -d && /usr/local/bin/docker-compose logs -f
-"@
+# $remoteDockerCommand = @"
+# cd $remoteRepoPath && /usr/local/bin/docker-compose up -d && /usr/local/bin/docker-compose logs -f
+# "@
 
-ssh $remoteServer $remoteDockerCommand
+# ssh $remoteServer $remoteDockerCommand

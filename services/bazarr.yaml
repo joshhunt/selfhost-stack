@@ -6,13 +6,11 @@ services:
   bazarr:
     container_name: bazarr
     image: linuxserver/bazarr:latest
-    ports:
-      - 6767:6767
     environment:
+      - UMASK_SET=022
       - PUID=$PUID
       - PGID=$PGID
       - TZ=$TZ
-      - UMASK_SET=022 #optional
     volumes:
       - $CONFIG_PATH/bazarr:/config
       - $DATA_PATH:/data

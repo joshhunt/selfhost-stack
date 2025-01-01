@@ -1,7 +1,8 @@
+#
+# Radarr - Movies
+#
+
 services:
-  #
-  # Radarr - Movies Search
-  #
   radarr:
     container_name: radarr
     image: linuxserver/radarr:latest
