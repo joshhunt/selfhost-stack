@@ -13,6 +13,8 @@ services:
       - $CONFIG_PATH/alloy:/var/lib/alloy
       - ${PWD}/grafana-alloy/config.alloy:/etc/alloy/config.alloy
       - $DATA_PATH:/data
+    ports:
+      - 12345:12345
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik"
