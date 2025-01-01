@@ -9,6 +9,7 @@ include:
   - services/traefik.yaml
   - services/whoami.yaml
   - services/watchtower.yaml
+  - services/duplicati.yaml
 
 networks:
   sabnzbd:
