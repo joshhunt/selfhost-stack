@@ -7,6 +7,11 @@ livedebugging {
   enabled = true
 }
 
+local.file "secrets" {
+  filename = "/run/secrets/grafana-alloy-secrets-file"
+  is_secret = true
+}
+
 discovery.docker "default" {
   host = "unix:///var/run/docker.sock"
 }
@@ -16,4 +21,14 @@ loki.source.docker "default" {
   targets    = discovery.docker.default.targets
   labels     = {"app" = "docker"}
   forward_to = []
+}
+
+loki.write "default" {
+    endpoint {
+        url = json_path(local.file.secrets.content, "logs_url")
+        basic_auth {
+            username = json_path(local.file.secrets.content, "logs_user")
+            password = json_path(local.file.secrets.content, "token")
+        }
+    }
 }

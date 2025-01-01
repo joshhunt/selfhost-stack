@@ -22,3 +22,5 @@ services:
       - "traefik.http.routers.alloy.rule=Host(`alloy.trtr.co`)"
       - "traefik.http.services.alloy.loadbalancer.server.port=12345"
       - "com.centurylinklabs.watchtower.enable=true"
+    secrets:
+      - grafana-alloy-secrets-file
