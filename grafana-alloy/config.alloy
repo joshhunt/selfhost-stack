@@ -2,3 +2,18 @@ logging {
   level  = "debug"
   format = "logfmt"
 }
+
+livedebugging {
+  enabled = true
+}
+
+discovery.docker "default" {
+  host = "unix:///var/run/docker.sock"
+}
+
+loki.source.docker "default" {
+  host       = "unix:///var/run/docker.sock"
+  targets    = discovery.docker.default.targets
+  labels     = {"app" = "docker"}
+  // forward_to = [loki.write.local.receiver]
+}
