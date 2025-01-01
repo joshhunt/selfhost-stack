@@ -5,6 +5,9 @@ services:
     networks:
       - traefik
     command:
+      - "run"
+      - "/etc/alloy/config.alloy"
+      - "--storage.path=/var/lib/alloy/data"
       - "--server.http.listen-addr=0.0.0.0:12345"
     labels:
       - "traefik.enable=true"
