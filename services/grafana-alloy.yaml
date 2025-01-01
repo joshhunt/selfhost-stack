@@ -9,7 +9,7 @@ services:
       - "/etc/alloy/config.alloy"
       - "--storage.path=/var/lib/alloy/data"
       - "--server.http.listen-addr=0.0.0.0:12345"
-      - "--stability.level experimental"
+      - "--stability.level=experimental"
     volumes:
       - $CONFIG_PATH/alloy:/var/lib/alloy
       - ${PWD}/grafana-alloy/config.alloy:/etc/alloy/config.alloy
