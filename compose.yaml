@@ -8,6 +8,7 @@ include:
   - services/sonarr.yaml
   - services/traefik.yaml
   - services/whoami.yaml
+  - services/watchtower.yaml
 
 networks:
   sabnzbd:
