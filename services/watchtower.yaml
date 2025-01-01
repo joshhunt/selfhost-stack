@@ -8,6 +8,6 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     command:
-      - "--interval=30"
+      - "--interval=3600"
       - "--label-enable"
       - "--cleanup"
