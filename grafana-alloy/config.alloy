@@ -25,10 +25,10 @@ loki.source.docker "default" {
 
 loki.write "default" {
     endpoint {
-        url = json_path(local.file.secrets.content, "logs_url")
+        url = json_path(local.file.secrets.content, "logs_url")[0]
         basic_auth {
-            username = json_path(local.file.secrets.content, "logs_user")
-            password = json_path(local.file.secrets.content, "token")
+            username = json_path(local.file.secrets.content, "logs_user")[0]
+            password = json_path(local.file.secrets.content, "token")[0]
         }
     }
 }
