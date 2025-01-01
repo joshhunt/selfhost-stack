@@ -3,12 +3,17 @@ $remoteServer = "josh@trevor.local"    # Replace with your remote server details
 $remoteRepoPath = "/Users/josh/selfhost-stack" # Replace with your remote repository path
 $branch = "main"                        # Replace with your branch name if different
 
-# Step 1: Perform a git commit with passed arguments
-Write-Host "Performing git commit with passed arguments: $($args -join ' ')"
-git commit @args
-if ($LASTEXITCODE -ne 0) {
-    Write-Error "Git commit failed. Exiting script."
-    exit $LASTEXITCODE
+# Check if arguments are passed
+if ($args.Count -gt 0) {
+    # Step 1: Perform a git commit with passed arguments
+    Write-Host "Performing git commit with passed arguments: $($args -join ' ')"
+    git commit @args
+    if ($LASTEXITCODE -ne 0) {
+        Write-Error "Git commit failed. Exiting script."
+        exit $LASTEXITCODE
+    }
+} else {
+    Write-Host "No arguments passed for git commit. Skipping commit step."
 }
 
 # Step 2: Perform a git push

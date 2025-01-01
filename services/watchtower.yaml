@@ -7,5 +7,5 @@ services:
     image: containrrr/watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /root/.docker/config.json:/config.json
+      - $CONFIG_PATH/watchtower/config.json:/config.json
     command: --interval 30 --label-enable
