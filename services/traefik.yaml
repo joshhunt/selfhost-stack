@@ -3,7 +3,7 @@ services:
     container_name: traefik
     image: traefik:v3.2
     command:
-      # - "--log.level=DEBUG"
+      - "--log.level=DEBUG"
       - "--providers.docker"
       - "--providers.docker.exposedByDefault=false"
       - "--api.insecure=true"
