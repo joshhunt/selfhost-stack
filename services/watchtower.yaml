@@ -1,11 +1,13 @@
 #
 # Watchtower - updates docker containers
 #
-
 services:
   watchtower:
     container_name: watchtower
     image: containrrr/watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    command: --interval 30 --label-enable
+    command:
+      - --interval 30
+      - --label-enable
+      - --cleanup

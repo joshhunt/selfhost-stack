@@ -23,3 +23,5 @@ networks:
 secrets:
   cloudflare-api-key:
     file: $CONFIG_PATH/secrets/cloudflare-selfhost-stack-letsencrypt-trtr-dot-co.txt
+  duplicati-secrets-file:
+    file: $CONFIG_PATH/secrets/duplicati-secrets-file.json

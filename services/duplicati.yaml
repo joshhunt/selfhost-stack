@@ -1,0 +1,30 @@
+#
+# Duplicati - Backs up $CONFIG_PATH to windows pc
+#
+services:
+  duplicati:
+    image: lscr.io/linuxserver/duplicati:latest
+    container_name: duplicati
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - CLI_ARGS= #optional
+      - SETTINGS_ENCRYPTION_KEY: "$settings-key"
+      - DUPLICATI__SECRET_PROVIDER: file:///run/secrets/duplicati-secrets-file
+      - DUPLICATI__WEBSERVICE_PASSWORD: "$ui-password"
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.routers.duplicati.entrypoints=websecure"
+      - "traefik.http.routers.duplicati.rule=Host(`duplicati.trtr.co`)"
+      - "com.centurylinklabs.watchtower.enable=true"
+    volumes:
+      - $CONFIG_PATH/duplicati/config:/config
+      - /path/to/backups:/backups
+      - /path/to/source:/source
+    restart: unless-stopped
+    secrets:
+      - duplicati-secrets-file
