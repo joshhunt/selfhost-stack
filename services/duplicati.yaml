@@ -10,7 +10,7 @@ services:
       - PGID=$PGID
       - TZ=Etc/UTC
       - CLI_ARGS= #optional
-      - "DUPLICATI__SECRET_PROVIDER=file://run/secrets/duplicati-secrets-file"
+      - "DUPLICATI__SECRET_PROVIDER=file:///run/secrets/duplicati-secrets-file"
       - "DUPLICATI__WEBSERVICE_PASSWORD=$$ui-password"
       - "SETTINGS_ENCRYPTION_KEY=$$settings-key"
     networks:
