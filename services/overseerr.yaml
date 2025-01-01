@@ -19,4 +19,5 @@ services:
       - "traefik.docker.network=traefik"
       - "traefik.http.routers.overseerr.entrypoints=websecure"
       - "traefik.http.routers.overseerr.rule=Host(`grab.trtr.co`)"
+      - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped

@@ -25,6 +25,7 @@ services:
       - "traefik.docker.network=traefik"
       - "traefik.http.routers.sonarr.entrypoints=websecure"
       - "traefik.http.routers.sonarr.rule=Host(`sonarr.trtr.co`)"
+      - "com.centurylinklabs.watchtower.enable=true"
     healthcheck:
       test: curl -fSs http://127.0.0.1:8989 || exit 1
       start_period: 90s
