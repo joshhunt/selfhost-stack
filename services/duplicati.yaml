@@ -11,7 +11,7 @@ services:
       - TZ=Etc/UTC
       - CLI_ARGS= #optional
       - SETTINGS_ENCRYPTION_KEY="$$settings-key"
-      - DUPLICATI__SECRET_PROVIDER="file:///run/secrets/duplicati-secrets-file"
+      - "DUPLICATI__SECRET_PROVIDER=file:///run/secrets/duplicati-secrets-file"
       - DUPLICATI__WEBSERVICE_PASSWORD="$$ui-password"
     networks:
       - traefik
