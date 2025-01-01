@@ -24,9 +24,23 @@ discovery.docker "default" {
   host = "unix:///var/run/docker.sock"
 }
 
+discovery.relabel "default" {
+  targets = discovery.docker.default.targets
+
+  rule {
+    action = "labelmap"
+    regex = "__meta_docker_container_label_([^_]+)"
+  }
+  rule {
+    action = "replace"
+    source_labels = ["__meta_docker_container_name"]
+    target_label = "container"
+  }
+}
+
 loki.source.docker "default" {
   host       = "unix:///var/run/docker.sock"
-  targets    = discovery.docker.default.targets
+  targets    = discovery.relabel.default.output
   labels     = {"app" = "docker", "job" = "selfhost-stack"}
   forward_to = [loki.write.default.receiver]
 }
