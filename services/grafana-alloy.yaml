@@ -1,0 +1,12 @@
+services:
+  grafana-alloy:
+    container_name: grafana-alloy
+    image: grafana/alloy:latest
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.routers.alloy.entrypoints=websecure"
+      - "traefik.http.routers.alloy.rule=Host(`alloy.trtr.co`)"
+      - "com.centurylinklabs.watchtower.enable=true"
