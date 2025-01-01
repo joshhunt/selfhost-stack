@@ -10,6 +10,7 @@ include:
   - services/whoami.yaml
   - services/watchtower.yaml
   - services/duplicati.yaml
+  - services/grafana-alloy.yaml
 
 networks:
   sabnzbd:
