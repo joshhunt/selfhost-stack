@@ -6,13 +6,12 @@ services:
     image: lscr.io/linuxserver/duplicati:latest
     container_name: duplicati
     environment:
-      - PUID=$PUID
-      - PGID=$PGID
-      - TZ=Etc/UTC
-      - CLI_ARGS= #optional
-      - "DUPLICATI__SECRET_PROVIDER=file-secret:///run/secrets/duplicati-secrets-file"
-      - "DUPLICATI__WEBSERVICE_PASSWORD=$$ui-password"
-      - "SETTINGS_ENCRYPTION_KEY=$$settings-key"
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+      DUPLICATI__SECRET_PROVIDER: "file-secret:///run/secrets/duplicati-secrets-file"
+      DUPLICATI__WEBSERVICE_PASSWORD: "$$ui-password"
+      SETTINGS_ENCRYPTION_KEY: "$$settings-key"
     networks:
       - traefik
     labels:
@@ -23,6 +22,7 @@ services:
       - "com.centurylinklabs.watchtower.enable=true"
     volumes:
       - $CONFIG_PATH/duplicati/config:/config
+      - $CONFIG_PATH/id_ed25519:/id_ed25519
       - $CONFIG_PATH:/source
     restart: unless-stopped
     secrets:
