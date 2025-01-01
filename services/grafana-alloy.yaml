@@ -11,7 +11,7 @@ services:
       - "--server.http.listen-addr=0.0.0.0:12345"
     volumes:
       - $CONFIG_PATH/alloy:/var/lib/alloy
-      - ./grafana-alloy/config.alloy:/etc/alloy/config.alloy
+      - ${PWD}/grafana-alloy/config.alloy:/etc/alloy/config.alloy
       - $DATA_PATH:/data
     labels:
       - "traefik.enable=true"
