@@ -4,9 +4,12 @@ services:
     image: grafana/alloy:latest
     networks:
       - traefik
+    command:
+      - "--server.http.listen-addr=0.0.0.0:12345"
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik"
       - "traefik.http.routers.alloy.entrypoints=websecure"
       - "traefik.http.routers.alloy.rule=Host(`alloy.trtr.co`)"
+      # - "traefik.http.services.adguardhome.loadbalancer.server.port=12345"
       - "com.centurylinklabs.watchtower.enable=true"
