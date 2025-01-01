@@ -23,4 +23,6 @@ services:
       - "traefik.http.services.alloy.loadbalancer.server.port=12345"
       - "com.centurylinklabs.watchtower.enable=true"
     secrets:
-      - grafana-alloy-secrets-file
+      - grafana-alloy-token
+      - grafana-alloy-loki-url
+      - grafana-alloy-loki-user

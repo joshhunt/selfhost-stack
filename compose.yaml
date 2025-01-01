@@ -27,5 +27,9 @@ secrets:
     file: $CONFIG_PATH/secrets/cloudflare-selfhost-stack-letsencrypt-trtr-dot-co.txt
   duplicati-secrets-file:
     file: $CONFIG_PATH/secrets/duplicati-secrets-file.json
-  grafana-alloy-secrets-file:
-    file: $CONFIG_PATH/secrets/grafana-alloy-secrets-file.json
+  grafana-alloy-token:
+    file: $CONFIG_PATH/secrets/grafana-alloy-token.txt
+  grafana-alloy-loki-url:
+    file: $CONFIG_PATH/secrets/grafana-alloy-loki-url.txt
+  grafana-alloy-loki-user:
+    file: $CONFIG_PATH/secrets/grafana-alloy-loki-user.txt

@@ -7,9 +7,19 @@ livedebugging {
   enabled = true
 }
 
-local.file "secrets" {
-  filename = "/run/secrets/grafana-alloy-secrets-file"
-  // is_secret = true
+local.file "token" {
+  filename = "/run/secrets/grafana-alloy-token"
+  is_secret = true
+}
+
+local.file "loki_url" {
+  filename = "/run/secrets/grafana-alloy-loki-url"
+  is_secret = true
+}
+
+local.file "loki_user" {
+  filename = "/run/secrets/grafana-alloy-loki-user"
+  is_secret = true
 }
 
 discovery.docker "default" {
@@ -25,10 +35,10 @@ loki.source.docker "default" {
 
 loki.write "default" {
     endpoint {
-        url = json_path(local.file.secrets.content, "logs_url")[0]
+        url = local.file.loki_url.content
         basic_auth {
-            username = json_path(local.file.secrets.content, "logs_user")[0]
-            password = json_path(local.file.secrets.content, "token")[0]
+            username = local.file.loki_user.content
+            password = local.file.token.content
         }
     }
 }
