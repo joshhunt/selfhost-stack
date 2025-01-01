@@ -27,6 +27,8 @@ services:
       - "--certificatesresolvers.wildcard.acme.email=letsencrypt@trtr.co"
       - "--certificatesresolvers.wildcard.acme.storage=/letsencrypt/acme.json"
       # - "--certificatesresolvers.wildcard.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+
+      - "traefik.http.middlewares.testHeader.headers.customresponseheaders.Test-Header=Hello-Josh"
     networks:
       - traefik
     ports:
