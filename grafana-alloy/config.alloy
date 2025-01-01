@@ -28,13 +28,23 @@ discovery.relabel "default" {
   targets = discovery.docker.default.targets
 
   rule {
-    action = "labelmap"
-    regex = "__meta_docker_container_label_([^_]+)"
-  }
-  rule {
     action = "replace"
     source_labels = ["__meta_docker_container_name"]
+    regex = "/(.*)"
+    replacement = "$1"
     target_label = "container"
+  }
+
+  rule {
+    action = "replace"
+    source_labels = ["__meta_docker_container_label_build_version"]
+    target_label = "container_build_version"
+  }
+
+  rule {
+    action = "replace"
+    source_labels = ["__meta_docker_container_label_com_docker_compose_project"]
+    target_label = "compose_project"
   }
 }
 
