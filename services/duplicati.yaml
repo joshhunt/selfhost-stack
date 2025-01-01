@@ -6,13 +6,13 @@ services:
     image: lscr.io/linuxserver/duplicati:latest
     container_name: duplicati
     environment:
-      - PUID=1000
-      - PGID=1000
+      - PUID=$PUID
+      - PGID=$PGID
       - TZ=Etc/UTC
       - CLI_ARGS= #optional
-      - SETTINGS_ENCRYPTION_KEY="$$settings-key"
       - "DUPLICATI__SECRET_PROVIDER=file:///run/secrets/duplicati-secrets-file"
-      - DUPLICATI__WEBSERVICE_PASSWORD="$$ui-password"
+      - "DUPLICATI__WEBSERVICE_PASSWORD=$$ui-password"
+      - "SETTINGS_ENCRYPTION_KEY=$$settings-key"
     networks:
       - traefik
     labels:
