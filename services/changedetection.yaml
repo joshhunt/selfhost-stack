@@ -1,0 +1,23 @@
+services:
+  changedetection:
+    image: lscr.io/linuxserver/changedetection.io:latest
+    container_name: changedetection
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+      # - PLAYWRIGHT_DRIVER_URL= #optional
+    volumes:
+      - $CONFIG_PATH/changedetection/config:/config
+    networks:
+      - sabnzbd
+      - traefik
+      - overseerr
+      - bazarr
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.routers.changedetection.entrypoints=websecure"
+      - "traefik.http.routers.changedetection.rule=Host(`changedetection.trtr.co`)"
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
