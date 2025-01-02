@@ -11,6 +11,7 @@ include:
   - services/watchtower.yaml
   - services/duplicati.yaml
   - services/grafana-alloy.yaml
+  - services/actual.yaml
 
 networks:
   sabnzbd:

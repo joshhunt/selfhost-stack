@@ -1,0 +1,21 @@
+#
+# Actual - budgeting
+#
+services:
+  actual_server:
+    image: docker.io/actualbudget/actual-server:latest
+    # environment:
+    # Uncomment any of the lines below to set configuration options.
+    # See all options and more details at https://actualbudget.github.io/docs/Installing/Configuration
+    # !! If you are not using any of these options, remove the 'environment:' tag entirely.
+    volumes:
+      - $CONFIG_PATH/actual:/data
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.routers.actual.entrypoints=websecure"
+      - "traefik.http.routers.actual.rule=Host(`actual.trtr.co`)"
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
