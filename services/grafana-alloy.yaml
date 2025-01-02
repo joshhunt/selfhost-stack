@@ -7,6 +7,7 @@ services:
     command:
       - "run"
       - "/etc/alloy/config.alloy"
+      - "--disable-reporting"
       - "--storage.path=/var/lib/alloy/data"
       - "--server.http.listen-addr=0.0.0.0:12345"
       - "--stability.level=experimental"
