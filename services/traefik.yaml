@@ -8,6 +8,9 @@ services:
       - "--providers.docker.exposedByDefault=false"
       - "--api.insecure=true"
 
+      # Logs
+      - "--accesslog=true"
+
       # HTTP server -redirect to HTTPS
       - "--entrypoints.web.address=:80"
       - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
