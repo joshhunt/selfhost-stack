@@ -10,6 +10,7 @@ services:
 
       # Logs
       - "--accesslog=true"
+      - "--accesslog.format=json"
 
       # HTTP server -redirect to HTTPS
       - "--entrypoints.web.address=:80"
