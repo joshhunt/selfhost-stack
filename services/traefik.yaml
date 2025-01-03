@@ -8,9 +8,13 @@ services:
       - "--providers.docker.exposedByDefault=false"
       - "--api.insecure=true"
 
-      # Logs
+      # Logs + Metrics
       - "--accesslog=true"
       - "--accesslog.format=json"
+      - "--metrics.prometheus=true"
+      - "--metrics.prometheus.addEntryPointsLabels=true"
+      - "--metrics.prometheus.addrouterslabels=true"
+      - "--metrics.prometheus.addServicesLabels=true"
 
       # HTTP server -redirect to HTTPS
       - "--entrypoints.web.address=:80"
