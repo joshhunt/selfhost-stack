@@ -6,6 +6,7 @@ services:
       - PUID=$PUID
       - PGID=$PGID
       - TZ=$TZ
+      - CF_DNS_API_TOKEN_FILE=/run/secrets/cloudflare-api-key
     command:
       # - "--log.level=DEBUG"
       - "--providers.docker"
@@ -48,7 +49,5 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - $CONFIG_PATH/traefik/letsencrypt:/letsencrypt
-    environment:
-      - CF_DNS_API_TOKEN_FILE=/run/secrets/cloudflare-api-key
     secrets:
       - cloudflare-api-key
