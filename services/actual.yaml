@@ -2,7 +2,8 @@
 # Actual - budgeting
 #
 services:
-  actual_server:
+  actual:
+    container_name: actual
     image: docker.io/actualbudget/actual-server:latest
     # environment:
     # Uncomment any of the lines below to set configuration options.
