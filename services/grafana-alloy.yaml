@@ -29,5 +29,6 @@ services:
       - grafana-alloy-loki-user
       - grafana-alloy-prom-url
       - grafana-alloy-prom-user
-    volumes:
-      grafana-alloy-data
+
+volumes:
+  grafana-alloy-data:
