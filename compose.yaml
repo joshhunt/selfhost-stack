@@ -13,7 +13,6 @@ include:
   - services/grafana-alloy.yaml
   - services/actual.yaml
   - services/changedetection.yaml
-  - services/portainer.yaml
 
 networks:
   sabnzbd:
