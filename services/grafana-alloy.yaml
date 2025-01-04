@@ -27,3 +27,5 @@ services:
       - grafana-alloy-token
       - grafana-alloy-loki-url
       - grafana-alloy-loki-user
+      - grafana-alloy-prom-url
+      - grafana-alloy-prom-user

@@ -20,6 +20,14 @@ local.file "loki_user" {
   filename = "/run/secrets/grafana-alloy-loki-user"
 }
 
+local.file "prom_url" {
+  filename = "/run/secrets/grafana-alloy-prom-url"
+}
+
+local.file "prom_user" {
+  filename = "/run/secrets/grafana-alloy-prom-user"
+}
+
 discovery.docker "default" {
   host = "unix:///var/run/docker.sock"
 }
@@ -60,6 +68,25 @@ loki.write "default" {
         url = local.file.loki_url.content
         basic_auth {
             username = local.file.loki_user.content
+            password = local.file.token.content
+        }
+    }
+}
+
+prometheus.scrape "traefik" {
+  targets    = [{
+    __address__ = "traefik:8080"
+    "app" = "traefik"
+  }]
+  forward_to = [prometheus.remote_write.default.receiver]
+  labels     = { "job" = "selfhost-stack"}
+}
+
+prometheus.remote_write "default" {
+    endpoint {
+        url = local.file.prom_url.content
+        basic_auth {
+            username = local.file.prom_user.content
             password = local.file.token.content
         }
     }
