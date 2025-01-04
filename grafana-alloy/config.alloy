@@ -77,9 +77,9 @@ prometheus.scrape "traefik" {
   targets    = [{
     __address__ = "traefik:8080",
     "app" = "traefik",
+    "job" = "selfhost-stack",
   }]
   forward_to = [prometheus.remote_write.default.receiver]
-  labels     = { "job" = "selfhost-stack"}
 }
 
 prometheus.remote_write "default" {
