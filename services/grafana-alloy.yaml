@@ -14,7 +14,7 @@ services:
     volumes:
       - $CONFIG_PATH/alloy:/var/lib/alloy
       - ${PWD}/grafana-alloy/config.alloy:/etc/alloy/config.alloy
-      - $DATA_PATH:/data
+      - grafana-alloy-data:/data
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
       - "traefik.enable=true"
@@ -29,3 +29,5 @@ services:
       - grafana-alloy-loki-user
       - grafana-alloy-prom-url
       - grafana-alloy-prom-user
+    volumes:
+      grafana-alloy-data
