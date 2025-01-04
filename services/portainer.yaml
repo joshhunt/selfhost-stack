@@ -17,6 +17,7 @@ services:
       - "traefik.http.routers.portainer.entrypoints=websecure"
       - "traefik.http.routers.portainer.rule=Host(`portainer.trtr.co`)"
       - "com.centurylinklabs.watchtower.enable=true"
+      - "traefik.http.services.portainer.loadbalancer.server.port=9000"
     restart: unless-stopped
 volumes:
   portainer_data:
