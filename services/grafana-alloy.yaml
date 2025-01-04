@@ -12,9 +12,8 @@ services:
       - "--server.http.listen-addr=0.0.0.0:12345"
       - "--stability.level=experimental"
     volumes:
-      - $CONFIG_PATH/alloy:/var/lib/alloy
+      - grafana-alloy-data:/var/lib/alloy
       - ${PWD}/grafana-alloy/config.alloy:/etc/alloy/config.alloy
-      - grafana-alloy-data:/data
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
       - "traefik.enable=true"
