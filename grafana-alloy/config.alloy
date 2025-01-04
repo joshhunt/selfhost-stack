@@ -75,7 +75,7 @@ loki.write "default" {
 
 prometheus.scrape "traefik" {
   targets    = [{
-    __address__ = "traefik:8080"
+    __address__ = "traefik:8080",
     "app" = "traefik"
   }]
   forward_to = [prometheus.remote_write.default.receiver]
