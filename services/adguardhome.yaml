@@ -6,6 +6,10 @@ services:
   adguardhome:
     container_name: adguardhome
     image: adguard/adguardhome
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
     ports:
       # Plain DNS
       - "53:53/tcp"

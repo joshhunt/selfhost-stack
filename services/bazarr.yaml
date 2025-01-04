@@ -7,10 +7,10 @@ services:
     container_name: bazarr
     image: linuxserver/bazarr:latest
     environment:
-      - UMASK_SET=022
       - PUID=$PUID
       - PGID=$PGID
       - TZ=$TZ
+      - UMASK_SET=022
     volumes:
       - $CONFIG_PATH/bazarr:/config
       - $DATA_PATH:/data

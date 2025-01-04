@@ -2,6 +2,10 @@ services:
   grafana-alloy:
     container_name: grafana-alloy
     image: grafana/alloy:latest
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
     networks:
       - traefik
     command:

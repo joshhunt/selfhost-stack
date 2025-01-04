@@ -5,6 +5,10 @@ services:
   actual:
     container_name: actual
     image: docker.io/actualbudget/actual-server:latest
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
     # environment:
     # Uncomment any of the lines below to set configuration options.
     # See all options and more details at https://actualbudget.github.io/docs/Installing/Configuration

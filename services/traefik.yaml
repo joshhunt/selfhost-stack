@@ -2,6 +2,10 @@ services:
   traefik:
     container_name: traefik
     image: traefik:v3.2
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
     command:
       # - "--log.level=DEBUG"
       - "--providers.docker"

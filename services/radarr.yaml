@@ -7,10 +7,10 @@ services:
     container_name: radarr
     image: linuxserver/radarr:latest
     environment:
-      - UMASK_SET=22
       - PUID=$PUID
       - PGID=$PGID
       - TZ=$TZ
+      - UMASK_SET=22
     volumes:
       - $CONFIG_PATH/radarr:/config
       - $DATA_PATH:/data
