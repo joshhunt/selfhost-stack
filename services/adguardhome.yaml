@@ -45,6 +45,11 @@ services:
       - CONFIGFILE=/config/adguardhome-sync.yaml
     volumes:
       - $CONFIG_PATH/adguardhome-sync:/config
-    ports:
-      - 8080:8080
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.routers.adguardhomesync.entrypoints=websecure"
+      - "traefik.http.routers.adguardhomesync.rule=Host(`adguard-sync.trtr.co`)"
     restart: unless-stopped
