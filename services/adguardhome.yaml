@@ -35,17 +35,16 @@ services:
       - $CONFIG_PATH/adguardhome/config:/opt/adguardhome/conf # app configuration
       - $CONFIG_PATH/adguardhome/work:/opt/adguardhome/work # app working directory
 
-
-  # adguardhome-sync:
-  #   image: lscr.io/linuxserver/adguardhome-sync:latest
-  #   container_name: adguardhome-sync
-  #   environment:
-  #     - PUID=$PUID
-  #     - PGID=$PGID
-  #     - TZ=$TZ
-  #     - CONFIGFILE=/config/adguardhome-sync.yaml
-  #   volumes:
-  #     - $CONFIG_PATH/adguardhome-sync:/config
-  #   ports:
-  #     - 8080:8080
-  #   restart: unless-stopped
+  adguardhome-sync:
+    image: lscr.io/linuxserver/adguardhome-sync:latest
+    container_name: adguardhome-sync
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+      - CONFIGFILE=/config/adguardhome-sync.yaml
+    volumes:
+      - $CONFIG_PATH/adguardhome-sync:/config
+    ports:
+      - 8080:8080
+    restart: unless-stopped
