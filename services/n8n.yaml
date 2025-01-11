@@ -19,7 +19,7 @@ services:
       - "traefik.http.routers.n8n.rule=Host(`n8n.trtr.co`)"
       - "com.centurylinklabs.watchtower.enable=true"
     volumes:
-      - n8n_data:/home/node/.n8n
+      - n8n-data:/home/node/.n8n
 
 volumes:
   n8n-data:
