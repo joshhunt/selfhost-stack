@@ -24,6 +24,8 @@ networks:
     name: overseerr
   bazarr:
     name: bazarr
+  prowlarr:
+    name: prowlarr
 
 secrets:
   cloudflare-api-key:

@@ -19,6 +19,7 @@ services:
       - traefik
       - bazarr
       - overseerr
+      - prowlarr
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik"
