@@ -12,7 +12,8 @@ include:
   - services/duplicati.yaml
   - services/grafana-alloy.yaml
   - services/actual.yaml
-  - services/changedetection.yaml
+  - services/n8n.yaml
+  # - services/changedetection.yaml
 
 networks:
   sabnzbd:

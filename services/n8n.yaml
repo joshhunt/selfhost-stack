@@ -1,0 +1,25 @@
+services:
+  n8n:
+    container_name: n8n
+    image: docker.n8n.io/n8nio/n8n
+    restart: unless-stopped
+    environment:
+      - TZ=$TZ
+      - GENERIC_TIMEZONE=$TZ
+      - N8N_HOST=n8n.trtr.co
+      - N8N_PROTOCOL=https
+      - NODE_ENV=production
+      - WEBHOOK_URL=https://n8n.trtr.co/
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.routers.n8n.entrypoints=websecure"
+      - "traefik.http.routers.n8n.rule=Host(`n8n.trtr.co`)"
+      - "com.centurylinklabs.watchtower.enable=true"
+    volumes:
+      - n8n_data:/home/node/.n8n
+
+volumes:
+  n8n-data:

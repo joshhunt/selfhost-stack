@@ -1,10 +1,11 @@
+# Not currently in use
 services:
   changedetection:
     image: lscr.io/linuxserver/changedetection.io:latest
     container_name: changedetection
     environment:
-      - PUID=$PUID
       - PGID=$PGID
+      - PUID=$PUID
       - TZ=$TZ
       # - PLAYWRIGHT_DRIVER_URL= #optional
     volumes:
