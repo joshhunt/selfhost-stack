@@ -4,7 +4,7 @@
 services:
   everyman:
     container_name: everyman
-    image: ghcr.io/joshhunt/everyman-cinema-listings:release
+    image: ghcr.io/joshhunt/everyman-cinema-listings:main
     environment:
       - PUID=$PUID
       - PGID=$PGID
