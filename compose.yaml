@@ -13,6 +13,7 @@ include:
   - services/grafana-alloy.yaml
   # - services/actual.yaml
   - services/n8n.yaml
+  - services/everyman.yaml
   # - services/changedetection.yaml
 
 networks:
