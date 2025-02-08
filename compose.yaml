@@ -14,6 +14,7 @@ include:
   # - services/actual.yaml
   - services/n8n.yaml
   - services/everyman.yaml
+  - services/cloudflared.yaml
   # - services/changedetection.yaml
 
 networks:
@@ -27,6 +28,8 @@ networks:
     name: bazarr
   prowlarr:
     name: prowlarr
+  cloudflare-tunnel:
+    name: cloudflare-tunnel
 
 secrets:
   cloudflare-api-key:
