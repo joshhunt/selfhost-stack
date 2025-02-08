@@ -7,7 +7,7 @@ include:
   - services/sabnzbd.yaml
   - services/sonarr.yaml
   - services/traefik.yaml
-  # - services/whoami.yaml
+  - services/whoami.yaml
   - services/watchtower.yaml
   - services/duplicati.yaml
   - services/grafana-alloy.yaml

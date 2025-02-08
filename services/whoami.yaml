@@ -9,3 +9,5 @@ services:
       - "traefik.docker.network=traefik"
       - "traefik.http.routers.whoami.entrypoints=websecure"
       - "traefik.http.routers.whoami.rule=Host(`whoami.trtr.co`)"
+      - "traefik.http.routers.mini.entrypoints=websecure"
+      - "traefik.http.routers.mini.rule=Host(`mini.trtr.co`)"
