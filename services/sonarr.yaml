@@ -13,7 +13,7 @@ services:
       - TZ=$TZ
       - UMASK_SET=22
     volumes:
-      - $CONFIG_PATH/sonarr:/config
+      - sonarr-config:/config
       - $DATA_PATH:/data
     networks:
       - sabnzbd
@@ -39,3 +39,6 @@ services:
     depends_on:
       sabnzbd:
         condition: service_healthy
+
+volumes:
+  sonarr-config:
