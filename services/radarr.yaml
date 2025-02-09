@@ -12,7 +12,7 @@ services:
       - TZ=$TZ
       - UMASK_SET=22
     volumes:
-      - $CONFIG_PATH/radarr:/config
+      - radarr-config:/config
       - $DATA_PATH:/data
     networks:
       - sabnzbd
@@ -38,3 +38,6 @@ services:
     depends_on:
       sabnzbd:
         condition: service_healthy
+
+volumes:
+  radarr-config:

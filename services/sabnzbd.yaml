@@ -13,7 +13,7 @@ services:
       - PGID=$PGID
       - TZ=$TZ
     volumes:
-      - $CONFIG_PATH/sabnzbd:/config
+      - sabnzbd-config:/config
       - $DATA_PATH:/data
     networks:
       - sabnzbd
@@ -31,3 +31,6 @@ services:
       timeout: 5s
       retries: 3
     restart: unless-stopped
+
+volumes:
+  sabnzbd-config:

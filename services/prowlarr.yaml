@@ -11,7 +11,7 @@ services:
       - TZ=$TZ
       - UMASK=002
     volumes:
-      - $CONFIG_PATH/prowlarr:/config:rw
+      - prowlarr-config:/config
     networks:
       - traefik
       - prowlarr
@@ -28,3 +28,6 @@ services:
       interval: 5s
       retries: 3
     restart: unless-stopped
+
+volumes:
+  prowlarr-config:
