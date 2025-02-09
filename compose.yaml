@@ -29,19 +29,3 @@ networks:
     name: prowlarr
   cloudflare-tunnel:
     name: cloudflare-tunnel
-
-secrets:
-  cloudflare-api-key:
-    file: $CONFIG_PATH/secrets/cloudflare-selfhost-stack-letsencrypt-trtr-dot-co.txt
-  duplicati-secrets-file:
-    file: $CONFIG_PATH/secrets/duplicati-secrets-file.json
-  grafana-alloy-token:
-    file: $CONFIG_PATH/secrets/grafana-alloy-token.txt
-  grafana-alloy-loki-url:
-    file: $CONFIG_PATH/secrets/grafana-alloy-loki-url.txt
-  grafana-alloy-loki-user:
-    file: $CONFIG_PATH/secrets/grafana-alloy-loki-user.txt
-  grafana-alloy-prom-url:
-    file: $CONFIG_PATH/secrets/grafana-alloy-prom-url.txt
-  grafana-alloy-prom-user:
-    file: $CONFIG_PATH/secrets/grafana-alloy-prom-user.txt

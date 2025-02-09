@@ -27,3 +27,7 @@ services:
     restart: unless-stopped
     secrets:
       - duplicati-secrets-file
+
+secrets:
+  duplicati-secrets-file:
+    file: $CONFIG_PATH/secrets/duplicati-secrets-file.json

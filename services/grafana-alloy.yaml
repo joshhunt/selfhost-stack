@@ -35,3 +35,15 @@ services:
 
 volumes:
   grafana-alloy-data:
+
+secrets:
+  grafana-alloy-token:
+    file: $CONFIG_PATH/secrets/grafana-alloy-token.txt
+  grafana-alloy-loki-url:
+    file: $CONFIG_PATH/secrets/grafana-alloy-loki-url.txt
+  grafana-alloy-loki-user:
+    file: $CONFIG_PATH/secrets/grafana-alloy-loki-user.txt
+  grafana-alloy-prom-url:
+    file: $CONFIG_PATH/secrets/grafana-alloy-prom-url.txt
+  grafana-alloy-prom-user:
+    file: $CONFIG_PATH/secrets/grafana-alloy-prom-user.txt

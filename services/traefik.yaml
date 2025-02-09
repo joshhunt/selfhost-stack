@@ -52,3 +52,7 @@ services:
       - $CONFIG_PATH/traefik/letsencrypt:/letsencrypt
     secrets:
       - cloudflare-api-key
+
+secrets:
+  cloudflare-api-key:
+    file: $CONFIG_PATH/secrets/cloudflare-selfhost-stack-letsencrypt-trtr-dot-co.txt
