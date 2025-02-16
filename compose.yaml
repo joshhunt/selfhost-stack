@@ -15,6 +15,7 @@ include:
   # - services/n8n.yaml
   - services/everyman.yaml
   # - services/changedetection.yaml
+  - services/tautulli.yaml
 
 networks:
   sabnzbd:

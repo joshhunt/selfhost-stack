@@ -1,0 +1,26 @@
+#
+# Tautulli - monitors Plex
+#
+services:
+  tautulli:
+    image: lscr.io/linuxserver/tautulli:latest
+    container_name: tautulli
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+      - UMASK=002
+    volumes:
+      - tautulli-config:/config
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.routers.tautulli.entrypoints=websecure"
+      - "traefik.http.routers.tautulli.rule=Host(`tautulli.trtr.co`)"
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
+
+volumes:
+  tautulli-config:
