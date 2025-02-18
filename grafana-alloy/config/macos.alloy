@@ -1,0 +1,91 @@
+prometheus.exporter.unix "macos" { }
+
+discovery.relabel "macos" {
+	targets = prometheus.exporter.unix.macos.targets
+
+	rule {
+		target_label = "instance"
+		replacement  = constants.hostname
+	}
+
+	rule {
+		target_label = "job"
+		replacement  = "integrations/macos-node"
+	}
+}
+
+prometheus.scrape "macos" {
+	targets    = discovery.relabel.macos.output
+	forward_to = [prometheus.relabel.macos.receiver]
+	job_name   = "integrations/node_exporter"
+}
+
+local.file_match "logs_integrations_macos_direct_scrape" {
+	path_targets = [{
+		__address__ = "localhost",
+		__path__    = "/var/log/*.log",
+		instance    = constants.hostname,
+		job         = "integrations/macos-node",
+	}]
+}
+
+
+
+loki.source.file "logs_integrations_macos_direct_scrape" {
+	targets    = local.file_match.logs_integrations_macos_direct_scrape.targets
+	forward_to = [loki.process.logs_integrations_macos_direct_scrape.receiver]
+}
+
+
+// OUTPUT
+prometheus.relabel "macos" {
+	rule {
+		source_labels = ["__name__"]
+		regex         = "up|node_boot_time_seconds|node_cpu_seconds_total|node_disk_io_time_seconds_total|node_disk_read_bytes_total|node_disk_written_bytes_total|node_filesystem_avail_bytes|node_filesystem_files|node_filesystem_files_free|node_filesystem_readonly|node_filesystem_size_bytes|node_load1|node_load15|node_load5|node_memory_compressed_bytes|node_memory_internal_bytes|node_memory_purgeable_bytes|node_memory_swap_total_bytes|node_memory_swap_used_bytes|node_memory_total_bytes|node_memory_wired_bytes|node_network_receive_bytes_total|node_network_receive_drop_total|node_network_receive_errs_total|node_network_receive_packets_total|node_network_transmit_bytes_total|node_network_transmit_drop_total|node_network_transmit_errs_total|node_network_transmit_packets_total|node_os_info|node_textfile_scrape_error|node_uname_info"
+		action        = "keep"
+	}
+
+    // Write to
+	forward_to = [prometheus.remote_write.grafana_cloud.receiver]
+}
+
+
+// OUTPUT
+loki.process "logs_integrations_macos_direct_scrape" {
+	forward_to = [loki.write.grafana_cloud_loki.receiver]
+
+	stage.multiline {
+		firstline     = "^([\\w]{3} )?[\\w]{3} +[\\d]+ [\\d]+:[\\d]+:[\\d]+|[\\w]{4}-[\\w]{2}-[\\w]{2} [\\w]{2}:[\\w]{2}:[\\w]{2}(?:[+-][\\w]{2})?"
+		max_lines     = 0
+		max_wait_time = "10s"
+	}
+
+	stage.regex {
+		expression = "(?P<timestamp>([\\w]{3} )?[\\w]{3} +[\\d]+ [\\d]+:[\\d]+:[\\d]+|[\\w]{4}-[\\w]{2}-[\\w]{2} [\\w]{2}:[\\w]{2}:[\\w]{2}(?:[+-][\\w]{2})?) (?P<hostname>\\S+) (?P<sender>.+?)\\[(?P<pid>\\d+)\\]:? (?P<message>(?s:.*))$"
+	}
+
+	stage.labels {
+		values = {
+			hostname = null,
+			pid      = null,
+			sender   = null,
+		}
+	}
+
+	stage.match {
+		selector = "{sender!=\"\", pid!=\"\"}"
+
+		stage.template {
+			source   = "message"
+			template = "{{ .sender }}[{{ .pid }}]: {{ .message }}"
+		}
+
+		stage.label_drop {
+			values = ["pid"]
+		}
+
+		stage.output {
+			source = "message"
+		}
+	}
+}

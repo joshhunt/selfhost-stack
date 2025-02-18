@@ -11,7 +11,6 @@ loki.write "grafana_cloud" {
 prometheus.remote_write "grafana_cloud" {
     endpoint {
         url = sys.env("ALLOY_PROM_URL")
-        
         basic_auth {
             username = sys.env("ALLOY_PROM_USER")
             password = sys.env("ALLOY_GRAFANA_CLOUD_TOKEN")

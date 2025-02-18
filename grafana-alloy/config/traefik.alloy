@@ -1,10 +1,10 @@
 prometheus.scrape "traefik" {
   // Read from
-  targets    = [{
+  targets = [{
     __scheme__ = "https",
     __address__ = "traefik.trtr.co:443",
     "app" = "traefik",
-    "job" = "selfhost-stack",
+    "service" = "selfhost-stack",
   }]
 
   // Write to
