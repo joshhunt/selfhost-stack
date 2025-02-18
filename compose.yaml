@@ -28,5 +28,3 @@ networks:
     name: bazarr
   prowlarr:
     name: prowlarr
-  cloudflare-tunnel:
-    name: cloudflare-tunnel
