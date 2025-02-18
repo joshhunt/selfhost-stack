@@ -44,6 +44,7 @@ services:
       # - "--certificatesresolvers.wildcard.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
 
     labels:
+      - "traefik.enable=true"
       - "traefik.http.routers.traefik-dashboard.rule=Host(`traefik.trtr.co`)"
       - "traefik.http.routers.traefik-dashboard.entrypoints=websecure"
       - "traefik.http.routers.traefik-dashboard.service=api@internal"
