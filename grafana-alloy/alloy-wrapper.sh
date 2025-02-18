@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 source "/opt/homebrew/etc/alloy/config.env"
 
 /opt/homebrew/opt/alloy/bin/alloy \
