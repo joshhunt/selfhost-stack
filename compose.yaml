@@ -1,7 +1,11 @@
 include:
+  # - services/overseerr.yaml
+  # - services/grafana-alloy.yaml
+  # - services/actual.yaml
+  # - services/n8n.yaml
+  # - services/changedetection.yaml
   - services/adguardhome.yaml
   - services/bazarr.yaml
-  # - services/overseerr.yaml
   - services/prowlarr.yaml
   - services/radarr.yaml
   - services/sabnzbd.yaml
@@ -10,11 +14,7 @@ include:
   - services/whoami.yaml
   - services/watchtower.yaml
   - services/duplicati.yaml
-  - services/grafana-alloy.yaml
-  # - services/actual.yaml
-  # - services/n8n.yaml
   - services/everyman.yaml
-  # - services/changedetection.yaml
   - services/tautulli.yaml
 
 networks:

@@ -1,0 +1,13 @@
+prometheus.scrape "traefik" {
+  // Read from
+  targets    = [{
+    __scheme__ = "https",
+    __address__ = "traefik.trtr.co:443",
+    "app" = "traefik",
+    "job" = "selfhost-stack",
+  }]
+
+  // Write to
+  forward_to = [prometheus.remote_write.grafana_cloud.receiver]
+}
+

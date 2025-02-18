@@ -1,0 +1,20 @@
+loki.write "grafana_cloud" {
+    endpoint {
+        url = local.file.loki_url.content
+        basic_auth {
+            username = local.file.loki_user.content
+            password = local.file.token.content
+        }
+    }
+}
+
+prometheus.remote_write "grafana_cloud" {
+    endpoint {
+        url = local.file.prom_url.content
+        
+        basic_auth {
+            username = local.file.prom_user.content
+            password = local.file.token.content
+        }
+    }
+}
