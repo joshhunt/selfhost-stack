@@ -52,10 +52,6 @@ services:
       - "traefik.http.routers.traefik-dashboard.service=api@internal"
       - "traefik.http.routers.traefik-dashboard.tls.certresolver=wildcard"
 
-      # Optional Middleware for Dashboard Route (Fixes /dashboard)
-      - "traefik.http.middlewares.dashboard-strip.stripprefix.prefixes=/dashboard"
-      - "traefik.http.routers.traefik-dashboard.middlewares=dashboard-strip"
-
     networks:
       - traefik
     ports:
