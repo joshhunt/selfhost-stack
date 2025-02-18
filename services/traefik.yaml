@@ -52,6 +52,12 @@ services:
       - "traefik.http.routers.traefik-dashboard.service=api@internal"
       - "traefik.http.routers.traefik-dashboard.tls.certresolver=wildcard"
 
+      # Prometheus Metrics Route
+      - "traefik.http.routers.traefik-metrics.rule=Host(`traefik.trtr.co`) && PathPrefix(`/metrics`)"
+      - "traefik.http.routers.traefik-metrics.entrypoints=websecure"
+      - "traefik.http.routers.traefik-metrics.service=prometheus@internal"
+      - "traefik.http.routers.traefik-metrics.tls.certresolver=wildcard"
+
     networks:
       - traefik
     ports:
