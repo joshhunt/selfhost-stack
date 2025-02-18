@@ -11,7 +11,9 @@ services:
       # - "--log.level=DEBUG"
       - "--providers.docker"
       - "--providers.docker.exposedByDefault=false"
-      - "--api.insecure=true"
+
+      # API + Dashboard
+      - "--api=true"
 
       # Logs + Metrics
       - "--accesslog=true"
@@ -40,13 +42,18 @@ services:
       - "--certificatesresolvers.wildcard.acme.email=letsencrypt@trtr.co"
       - "--certificatesresolvers.wildcard.acme.storage=/letsencrypt/acme.json"
       # - "--certificatesresolvers.wildcard.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+
+    labels:
+      - "traefik.http.routers.traefik-dashboard.rule=Host(`traefik.trtr.co`)"
+      - "traefik.http.routers.traefik-dashboard.entrypoints=websecure"
+      - "traefik.http.routers.traefik-dashboard.service=api@internal"
+
     networks:
       - traefik
       - cloudflare-tunnel
     ports:
       - "80:80"
       - "443:443"
-      - "8081:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - $CONFIG_PATH/traefik/letsencrypt:/letsencrypt
