@@ -52,7 +52,9 @@ prometheus.relabel "macos" {
 
 // OUTPUT
 loki.process "logs_integrations_macos_direct_scrape" {
-	forward_to = [loki.write.grafana_cloud_loki.receiver]
+
+    // Write to
+	forward_to = [loki.write.grafana_cloud.receiver]
 
 	stage.multiline {
 		firstline     = "^([\\w]{3} )?[\\w]{3} +[\\d]+ [\\d]+:[\\d]+:[\\d]+|[\\w]{4}-[\\w]{2}-[\\w]{2} [\\w]{2}:[\\w]{2}:[\\w]{2}(?:[+-][\\w]{2})?"
