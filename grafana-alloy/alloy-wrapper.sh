@@ -6,22 +6,16 @@ echo "ALLOY_LOKI_USER: $ALLOY_LOKI_USER"
 echo "ALLOY_PROM_URL: $ALLOY_PROM_URL"
 echo "ALLOY_PROM_USER: $ALLOY_PROM_USER"
 
-# ALLOY_LOKI_URL=$ALLOY_LOKI_URL \
-# ALLOY_LOKI_USER=$ALLOY_LOKI_USER \
-# ALLOY_PROM_URL=$ALLOY_PROM_URL \
-# ALLOY_PROM_USER=$ALLOY_PROM_USER \
-# /opt/homebrew/opt/alloy/bin/alloy \
-#     run /Users/josh/selfhost-stack/grafana-alloy/config \
-#     --server.http.listen-addr=0.0.0.0:12345 \
-#     --storage.path=/opt/homebrew/var/lib/alloy/data
+ALLOY_LOKI_URL=$ALLOY_LOKI_URL \
+ALLOY_LOKI_USER=$ALLOY_LOKI_USER \
+ALLOY_PROM_URL=$ALLOY_PROM_URL \
+ALLOY_PROM_USER=$ALLOY_PROM_USER \
+ALLOY_GRAFANA_CLOUD_TOKEN=$ALLOY_GRAFANA_CLOUD_TOKEN \
+/opt/homebrew/opt/alloy/bin/alloy \
+    run /Users/josh/selfhost-stack/grafana-alloy/config \
+    --server.http.listen-addr=0.0.0.0:12345 \
+    --storage.path=/opt/homebrew/var/lib/alloy/data
 
 
-COMMAND="/opt/homebrew/opt/alloy/bin/alloy run /Users/josh/selfhost-stack/grafana-alloy/config --server.http.listen-addr=0.0.0.0:12345 --storage.path=/opt/homebrew/var/lib/alloy/data"
 
-EXTRA_ARGS=$(cat "/opt/homebrew/etc/alloy/extra-args.txt")
-
-if [ -z "$EXTRA_ARGS" ]; then
-  exec $COMMAND
-else
-  exec $COMMAND $EXTRA_ARGS
-fi
+    
