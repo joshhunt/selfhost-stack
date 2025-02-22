@@ -1,0 +1,8 @@
+services:
+  scraparr:
+    image: ghcr.io/thecfu/scraparr
+    container_name: scraparr
+    volumes:
+      - $CONFIG_PATH/scraparr/config.yaml:/scraparr/config/config.yaml
+    networks:
+      - scraparr

@@ -16,6 +16,7 @@ include:
   - services/everyman.yaml
   - services/tautulli.yaml
   - services/docker-volume-backup.yaml
+  - services/scraparr.yaml
 
 networks:
   sabnzbd:
@@ -28,3 +29,5 @@ networks:
     name: bazarr
   prowlarr:
     name: prowlarr
+  scraparr:
+    name: scraparr
