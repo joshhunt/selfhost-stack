@@ -1,6 +1,7 @@
 services:
   # ... define other services using the `data` volume here
-  backup:
+  offen-backup:
+    container_name: offen-backup
     image: offen/docker-volume-backup
     environment:
       TZ: $TZ
