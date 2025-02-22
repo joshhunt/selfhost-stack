@@ -2,7 +2,19 @@ services:
   scraparr:
     image: ghcr.io/thecfu/scraparr
     container_name: scraparr
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+      - UMASK_SET=22
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.routers.scraparr.entrypoints=websecure"
+      - "traefik.http.routers.scraparr.rule=Host(`scraparr.trtr.co`)"
+      - "com.centurylinklabs.watchtower.enable=true"
     volumes:
       - $CONFIG_PATH/scraparr/config.yaml:/scraparr/config/config.yaml
+      - $DATA_PATH:/data
     networks:
       - scraparr
