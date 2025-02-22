@@ -18,3 +18,4 @@ services:
       - $DATA_PATH:/data
     networks:
       - scraparr
+      - traefik
