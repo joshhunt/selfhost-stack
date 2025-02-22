@@ -20,6 +20,7 @@ services:
       - "traefik.http.routers.tautulli.entrypoints=websecure"
       - "traefik.http.routers.tautulli.rule=Host(`tautulli.trtr.co`)"
       - "com.centurylinklabs.watchtower.enable=true"
+      - "docker-volume-backup.stop-during-backup=true"
     restart: unless-stopped
 
 volumes:

@@ -26,6 +26,7 @@ services:
       - "traefik.http.routers.radarr.entrypoints=websecure"
       - "traefik.http.routers.radarr.rule=Host(`radarr.trtr.co`)"
       - "com.centurylinklabs.watchtower.enable=true"
+      - "docker-volume-backup.stop-during-backup=true"
     healthcheck:
       test: curl -fSs http://127.0.0.1:7878 > /dev/null || exit 1
       start_period: 20s

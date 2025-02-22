@@ -1,0 +1,23 @@
+services:
+  # ... define other services using the `data` volume here
+  backup:
+    image: offen/docker-volume-backup
+    environment:
+      TZ: $TZ
+      BACKUP_CRON_EXPRESSION: "0 12 * * *" # noon daily
+      BACKUP_PRUNING_PREFIX: backup-
+      BACKUP_RETENTION_DAYS: "30"
+      SSH_HOST_NAME: 192.168.1.102
+      SSH_PORT: 22
+      SSH_USER: josh
+      SSH_REMOTE_PATH: "X:\\selfhost-stack-docker-volumes"
+      SSH_IDENTITY_FILE: "/root/.ssh/id_ed25519"
+    volumes:
+      - bazarr-config:/backup/bazarr-config:ro
+      - prowlarr-config:/backup/prowlarr-config:ro
+      - radarr-config:/backup/radarr-config:ro
+      - sonarr-config:/backup/sonarr-config:ro
+      - sabnzbd-config:/backup/sabnzbd-config:ro
+      - tautulli-config:/backup/tautulli-config:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - $CONFIG_PATH/id_ed25519:/root/.ssh/id_ed25519

@@ -23,6 +23,7 @@ services:
       - "traefik.http.routers.bazarr.entrypoints=websecure"
       - "traefik.http.routers.bazarr.rule=Host(`bazarr.trtr.co`)"
       - "com.centurylinklabs.watchtower.enable=true"
+      - "docker-volume-backup.stop-during-backup=true"
     healthcheck:
       test: curl -fSs http://127.0.0.1:6767 > /dev/null || exit 1
       start_period: 60s

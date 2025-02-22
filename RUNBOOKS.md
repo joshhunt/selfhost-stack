@@ -31,3 +31,7 @@ docker exec -it temp sh
 # Stop the container
 docker stop temp
 ```
+
+## Restore docker volume backups
+
+See https://offen.github.io/docker-volume-backup/how-tos/restore-volumes-from-backup.html

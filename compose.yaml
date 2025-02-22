@@ -13,9 +13,9 @@ include:
   - services/traefik.yaml
   - services/whoami.yaml
   - services/watchtower.yaml
-  - services/duplicati.yaml
   - services/everyman.yaml
   - services/tautulli.yaml
+  - services/docker-volume-backup.yaml
 
 networks:
   sabnzbd:
