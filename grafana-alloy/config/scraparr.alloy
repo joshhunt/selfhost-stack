@@ -1,0 +1,14 @@
+prometheus.scrape "scraparr" {
+  // Read from
+  targets = [{
+    __scheme__ = "https",
+    __address__ = "scraparr.trtr.co:443",
+    "job" = "scraparr",
+    "project" = "selfhost-stack",
+    "service" = "scraparr",
+  }]
+
+  // Write to
+  forward_to = [helpers.for_host.publish_metrics]
+}
+
