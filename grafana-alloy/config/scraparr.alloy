@@ -10,22 +10,22 @@ prometheus.scrape "scraparr" {
 
   relabel_configs = [
     {
-      source_labels = ["__name__"]
-      regex = "sonarr_.+"
-      target_label = "service"
-      replacement = "sonarr"
+      source_labels = ["__name__"],
+      regex = "sonarr_.+",
+      target_label = "service",
+      replacement = "sonarr",
     },
     {
-      source_labels = ["__name__"]
-      regex = "radarr_.+"
-      target_label = "service"
-      replacement = "radarr"
+      source_labels = ["__name__"],
+      regex = "radarr_.+",
+      target_label = "service",
+      replacement = "radarr",
     },
     {
-      source_labels = ["__name__"]
-      regex = "prowlarr_.+"
-      target_label = "service"
-      replacement = "prowlarr"
+      source_labels = ["__name__"],
+      regex = "prowlarr_.+",
+      target_label = "service",
+      replacement = "prowlarr",
     }
   ]
 
