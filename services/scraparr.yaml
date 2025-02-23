@@ -15,7 +15,9 @@ services:
       - "com.centurylinklabs.watchtower.enable=true"
     volumes:
       - $CONFIG_PATH/scraparr/config.yaml:/scraparr/config/config.yaml
-      - $DATA_PATH:/data
+      - type: bind
+        source: $DATA_PATH
+        target: /data
     networks:
       - scraparr
       - traefik

@@ -11,7 +11,9 @@ services:
       - TZ=$TZ
     volumes:
       - sabnzbd-config:/config
-      - $DATA_PATH:/data
+      - type: bind
+        source: $DATA_PATH
+        target: /data
     networks:
       - sabnzbd
       - traefik

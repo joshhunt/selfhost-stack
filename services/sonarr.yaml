@@ -14,7 +14,9 @@ services:
       - UMASK_SET=22
     volumes:
       - sonarr-config:/config
-      - $DATA_PATH:/data
+      - type: bind
+        source: $DATA_PATH
+        target: /data
     networks:
       - sabnzbd
       - traefik

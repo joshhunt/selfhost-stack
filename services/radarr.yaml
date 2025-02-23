@@ -13,7 +13,9 @@ services:
       - UMASK_SET=22
     volumes:
       - radarr-config:/config
-      - $DATA_PATH:/data
+      - type: bind
+        source: $DATA_PATH
+        target: /data
     networks:
       - sabnzbd
       - traefik

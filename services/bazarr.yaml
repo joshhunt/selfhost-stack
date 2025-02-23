@@ -13,7 +13,9 @@ services:
       - UMASK_SET=022
     volumes:
       - bazarr-config:/config
-      - $DATA_PATH:/data
+      - type: bind
+        source: $DATA_PATH
+        target: /data
     networks:
       - traefik
       - bazarr
