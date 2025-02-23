@@ -9,7 +9,7 @@ prometheus.scrape "scraparr" {
   }]
 
   // Write to
-  forward_to = [prometheus.relabel.scraparr_relabel]
+  forward_to = [prometheus.relabel.scraparr_relabel.receiver]
 }
 
 prometheus.relabel "scraparr_relabel" {
