@@ -3,11 +3,12 @@ prometheus.scrape "traefik" {
   targets = [{
     __scheme__ = "https",
     __address__ = "traefik.trtr.co:443",
-    "app" = "traefik",
-    "service" = "selfhost-stack",
+    "job" = "traefik",
+    "project" = "selfhost-stack",
+    "service" = "traefik",
   }]
 
   // Write to
-  forward_to = [prometheus.remote_write.grafana_cloud.receiver]
+  forward_to = [publish.metrics_for_host]
 }
 

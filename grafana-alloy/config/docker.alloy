@@ -11,19 +11,43 @@ discovery.relabel "docker_containers" {
     source_labels = ["__meta_docker_container_name"]
     regex = "/(.*)"
     replacement = "$1"
-    target_label = "container_name"
+    target_label = "docker_container_name"
+  }
+
+  rule {
+    action = "replace"
+    source_labels = ["docker_container_name"]
+    target_label = "service"
   }
 
   rule {
     action = "replace"
     source_labels = ["__meta_docker_container_label_build_version"]
-    target_label = "container_build_version"
+    target_label = "docker_container_build_version"
+  }
+
+  rule {
+    action = "replace"
+    source_labels = ["__meta_docker_container_label_org_opencontainers_image_title"]
+    target_label = "docker_image_title"
+  }
+
+  rule {
+    action = "replace"
+    source_labels = ["__meta_docker_container_label_org_opencontainers_image_version"]
+    target_label = "docker_image_version"
+  }
+
+  rule {
+    action = "replace"
+    source_labels = ["__meta_docker_container_label_org_opencontainers_image_revision"]
+    target_label = "docker_image_revision"
   }
 
   rule {
     action = "replace"
     source_labels = ["__meta_docker_container_label_com_docker_compose_project"]
-    target_label = "compose_project"
+    target_label = "docker_compose_project"
   }
 
   // This exposes an output
@@ -31,11 +55,14 @@ discovery.relabel "docker_containers" {
 
 loki.source.docker "default" {
   // Read from
-  targets    = discovery.relabel.docker_containers.output
-  host       = "unix:///var/run/docker.sock"
+  targets = discovery.relabel.docker_containers.output
+  host = "unix:///var/run/docker.sock"
 
-  labels     = {"app" = "docker", "service" = "selfhost-stack"}
+  labels = {
+    "job" = "docker",
+    "project" = "selfhost-stack"
+  }
 
   // Write to
-  forward_to = [loki.write.grafana_cloud.receiver]
+  forward_to = [publish.logs_for_host]
 }

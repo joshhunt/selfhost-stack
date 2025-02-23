@@ -46,16 +46,12 @@ prometheus.relabel "macos" {
 	}
 
     // Write to
-	forward_to = [prometheus.remote_write.grafana_cloud.receiver]
+	forward_to = [publish.metrics_for_host]
 }
 
 
 // OUTPUT
 loki.process "logs_integrations_macos_direct_scrape" {
-
-    // Write to
-	forward_to = [loki.write.grafana_cloud.receiver]
-
 	stage.multiline {
 		firstline     = "^([\\w]{3} )?[\\w]{3} +[\\d]+ [\\d]+:[\\d]+:[\\d]+|[\\w]{4}-[\\w]{2}-[\\w]{2} [\\w]{2}:[\\w]{2}:[\\w]{2}(?:[+-][\\w]{2})?"
 		max_lines     = 0
@@ -90,4 +86,8 @@ loki.process "logs_integrations_macos_direct_scrape" {
 			source = "message"
 		}
 	}
+
+	
+    // Write to
+	forward_to = [publish.logs_for_host]
 }
