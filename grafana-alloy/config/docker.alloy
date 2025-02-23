@@ -50,6 +50,11 @@ discovery.relabel "docker_containers" {
     target_label = "docker_compose_project"
   }
 
+  rule {
+    action = "labeldrop"
+    regex = "service_name"
+  }
+
   // This exposes an output
 }
 
@@ -70,6 +75,27 @@ loki.source.docker "default" {
 prometheus.scrape "docker" {
   // Read from
   targets = discovery.relabel.docker_containers.output
+
+  // Write to
+  forward_to = [prometheus.relabel.docker_relabel.receiver]
+}
+
+prometheus.relabel "docker_relabel" {
+  rule {
+    action = "keep"
+    source_labels = ["__name__"]
+    regex = "up"
+  }
+
+	rule {
+    target_label = "job"
+    replacement  = "docker"
+  }
+
+  rule {
+    target_label = "project"
+    replacement  = "selfhost-stack"
+  }
 
   // Write to
   forward_to = [helpers.for_host.publish_metrics]
