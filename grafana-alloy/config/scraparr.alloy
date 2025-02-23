@@ -8,6 +8,11 @@ prometheus.scrape "scraparr" {
     "service" = "scraparr",
   }]
 
+  // Write to
+  forward_to = [prometheus.relabel.scraparr_relabel]
+}
+
+prometheus.relabel "scraparr_relabel" {
   rule {
     source_labels = ["__name__"]
     regex = "sonarr_.+"
@@ -28,12 +33,6 @@ prometheus.scrape "scraparr" {
     target_label = "service"
     replacement = "prowlarr"
   }
-
-  // Write to
-  forward_to = [prometheus.relabel.scraparr_relabel]
-}
-
-prometheus.relabel "scraparr_relabel" {
 
   // Write to
   forward_to = [helpers.for_host.publish_metrics]
