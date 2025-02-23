@@ -9,6 +9,6 @@ prometheus.scrape "traefik" {
   }]
 
   // Write to
-  forward_to = [publish.metrics_for_host]
+  forward_to = [publish.default.metrics_for_host]
 }
 

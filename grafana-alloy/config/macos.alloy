@@ -46,7 +46,7 @@ prometheus.relabel "macos" {
 	}
 
     // Write to
-	forward_to = [publish.metrics_for_host]
+	forward_to = [publish.default.metrics_for_host]
 }
 
 
@@ -89,5 +89,5 @@ loki.process "logs_integrations_macos_direct_scrape" {
 
 	
     // Write to
-	forward_to = [publish.logs_for_host]
+	forward_to = [publish.default.logs_for_host]
 }

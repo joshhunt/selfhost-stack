@@ -30,3 +30,5 @@ declare "publish" {
         value = loki.relabel.logs_for_host.receiver
     }
 }
+
+publish "default" {}

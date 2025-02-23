@@ -64,5 +64,5 @@ loki.source.docker "default" {
   }
 
   // Write to
-  forward_to = [publish.logs_for_host]
+  forward_to = [publish.default.logs_for_host]
 }
