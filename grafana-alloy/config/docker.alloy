@@ -59,8 +59,8 @@ loki.source.docker "default" {
   host = "unix:///var/run/docker.sock"
 
   labels = {
-    "job" = "docker"
-    "project" = "selfhost-stack"
+    "job" = "docker",
+    "project" = "selfhost-stack",
   }
 
   // Write to
