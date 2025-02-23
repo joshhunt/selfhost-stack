@@ -4,24 +4,36 @@
 
 
 declare "publish" {
+    argument "instance" {
+        optional = false
+    }
+
+    argument "send_metrics_to" {
+        optional = false
+    }
+
+    argument "send_logs_to" {
+        optional = false
+    }
+
     prometheus.relabel "metrics_for_host" {
         rule {
             target_label = "instance"
-            replacement = "trevor"
+            replacement = argument.instance.value
         }
 
         // Write to
-        forward_to = [prometheus.remote_write.grafana_cloud.receiver]
+        forward_to = [argument.send_metrics_to.value]
     }
 
     loki.relabel "logs_for_host" {
         rule {
             target_label = "instance"
-            replacement = "trevor"
+            replacement = argument.instance.value
         }
 
         // Write to
-        forward_to = [loki.write.grafana_cloud.receiver]
+        forward_to = [argument.send_logs_to.value]
     }
 
     export "metrics_for_host" {
@@ -33,4 +45,8 @@ declare "publish" {
     }
 }
 
-publish "default" {}
+publish "default" {
+    instance = "trevor"
+    send_metrics_to = prometheus.remote_write.grafana_cloud.receiver
+    send_logs_to = loki.write.grafana_cloud.receiver
+}
