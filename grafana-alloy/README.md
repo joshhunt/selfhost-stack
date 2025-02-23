@@ -9,4 +9,4 @@ Common labels (kind of in order of granularity):
 - host: "trevor"
 - job: approx each file is one "job" - docker, integrations/macos-node, traefix, etc
 - project: "selfhost-stack" for everything from the docker compose project
-- service: the name of the individual app/service - traefik, sonarr, etc
+- service: the name of the service/app the metrics are for. It's possible for one job to scrape multiple services.
