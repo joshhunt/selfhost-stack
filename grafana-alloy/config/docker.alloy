@@ -66,3 +66,11 @@ loki.source.docker "default" {
   // Write to
   forward_to = [helpers.for_host.publish_logs]
 }
+
+prometheus.scrape "docker" {
+  // Read from
+  targets = discovery.relabel.docker_containers.output
+
+  // Write to
+  forward_to = [helpers.for_host.publish_metrics]
+}
