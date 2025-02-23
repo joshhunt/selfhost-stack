@@ -3,7 +3,7 @@
 
 
 
-declare "publish" {
+declare "helpers" {
     argument "instance" {
         optional = false
     }
@@ -36,16 +36,16 @@ declare "publish" {
         forward_to = [argument.send_logs_to.value]
     }
 
-    export "metrics_for_host" {
+    export "publish_metrics" {
         value = prometheus.relabel.metrics_for_host.receiver
     }
 
-    export "logs_for_host" {
+    export "publish_logs" {
         value = loki.relabel.logs_for_host.receiver
     }
 }
 
-publish "default" {
+helpers "for_host" {
     instance = "trevor"
     send_metrics_to = prometheus.remote_write.grafana_cloud.receiver
     send_logs_to = loki.write.grafana_cloud.receiver
