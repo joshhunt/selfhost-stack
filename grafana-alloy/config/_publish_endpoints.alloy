@@ -1,27 +1,29 @@
 // Scrapers and tail-ers send metrics to these components, which standardise them across everything
 // before sending them to Grafana Cloud
 
-prometheus.relabel "metrics_for_host" {
-    rule {
-        target_label = "instance"
-        replacement = "trevor"
-    }
 
-    // Write to
-    forward_to = [prometheus.remote_write.grafana_cloud.receiver]
-}
-
-loki.relabel "logs_for_host" {
-    rule {
-        target_label = "instance"
-        replacement = "trevor"
-    }
-
-    // Write to
-    forward_to = [loki.write.grafana_cloud.receiver]
-}
 
 declare "publish" {
+    prometheus.relabel "metrics_for_host" {
+        rule {
+            target_label = "instance"
+            replacement = "trevor"
+        }
+
+        // Write to
+        forward_to = [prometheus.remote_write.grafana_cloud.receiver]
+    }
+
+    loki.relabel "logs_for_host" {
+        rule {
+            target_label = "instance"
+            replacement = "trevor"
+        }
+
+        // Write to
+        forward_to = [loki.write.grafana_cloud.receiver]
+    }
+
     export "metrics_for_host" {
         value = prometheus.relabel.metrics_for_host.receiver
     }
