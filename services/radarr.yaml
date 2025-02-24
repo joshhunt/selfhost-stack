@@ -31,8 +31,8 @@ services:
       - "com.centurylinklabs.watchtower.enable=true"
       - "docker-volume-backup.stop-during-backup=true"
     healthcheck:
-      test: curl -fSs http://127.0.0.1:7878 > /dev/null || exit 1
-      start_period: 20s
+      test: curl -fSs http://127.0.0.1:7878/ping > /dev/null || exit 1
+      start_period: 60s
       timeout: 5s
       interval: 5s
       retries: 3
@@ -40,8 +40,8 @@ services:
     entrypoint:
       - /init
     depends_on:
-      sabnzbd:
-        condition: service_healthy
+      sabnzbd: { condition: service_healthy }
+      prowlarr: { condition: service_healthy }
 
 volumes:
   radarr-config:

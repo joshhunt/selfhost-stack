@@ -21,3 +21,13 @@ services:
     networks:
       - scraparr
       - traefik
+    depends_on:
+      radarr:
+        condition: service_healthy
+        restart: true
+      sonarr:
+        condition: service_healthy
+        restart: true
+      prowlarr:
+        condition: service_healthy
+        restart: true

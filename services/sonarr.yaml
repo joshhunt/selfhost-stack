@@ -32,17 +32,17 @@ services:
       - "com.centurylinklabs.watchtower.enable=true"
       - "docker-volume-backup.stop-during-backup=true"
     healthcheck:
-      test: curl -fSs http://127.0.0.1:8989 || exit 1
-      start_period: 90s
+      test: curl -fSs http://127.0.0.1:8989/ping > /dev/null || exit 1
+      start_period: 60s
       timeout: 5s
       interval: 5s
       retries: 3
-    restart: "unless-stopped"
+    restart: unless-stopped
     entrypoint:
       - /init
     depends_on:
-      sabnzbd:
-        condition: service_healthy
+      sabnzbd: { condition: service_healthy }
+      prowlarr: { condition: service_healthy }
 
 volumes:
   sonarr-config:
