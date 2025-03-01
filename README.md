@@ -2,6 +2,22 @@
 
 A single docker-composem file to selfhost a bunch of services locally in a home network.
 
+## Dashboards
+
+```sh
+cd dashboards
+
+# Build image
+docker build . -t dash-builder
+
+# Output dashboard json
+docker run --rm -v ./src:/dashboards dash-builder
+
+# Watch + upload to Grafana Cloud
+# Create an env-file with GRAFANA_API_KEY, GRAFANA_URL, FOLDER_UID defined
+docker run --rm -v ./src:/dashboards --env-file ./.env-secrets dash-builder watch
+```
+
 ## Secrets
 
 The following secrets must be configured in the $CONFIG_PATH/secrets directory:

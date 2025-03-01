@@ -1,1 +1,3 @@
 dashboards/vendor
+dashboards/src/vendor
+.env-secrets

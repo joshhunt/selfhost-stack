@@ -1,0 +1,3 @@
+{
+  prom: 'grafanacloud-joshhunt-prom',
+}
