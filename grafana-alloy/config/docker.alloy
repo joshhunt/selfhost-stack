@@ -72,24 +72,29 @@ loki.source.docker "default" {
   forward_to = [helpers.for_host.publish_logs]
 }
 
-prometheus.scrape "docker" {
-  // Read from
-  targets = discovery.relabel.docker_containers.output
-
-  // Write to
-  forward_to = [prometheus.relabel.docker_relabel.receiver]
+prometheus.exporter.cadvisor "docker_host" {
+  docker_host       = "unix:///var/run/docker.sock"
+  storage_duration  = "5m"
 }
 
-prometheus.relabel "docker_relabel" {
-  rule {
-    action = "keep"
-    source_labels = ["__name__"]
-    regex = "up"
-  }
+prometheus.scrape "docker_cadvisor" {
+  // Read from
+  targets = prometheus.exporter.cadvisor.docker_host.targets
+
+  // Write to
+  forward_to = [prometheus.relabel.docker_cadvisor_relabel.receiver]
+}
+
+prometheus.relabel "docker_cadvisor_relabel" {
+  // rule {
+  //   action = "keep"
+  //   source_labels = ["__name__"]
+  //   regex = "up"
+  // }
 
 	rule {
     target_label = "job"
-    replacement  = "docker"
+    replacement  = "docker_cadvisor"
   }
 
   rule {
