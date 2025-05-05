@@ -1,6 +1,47 @@
+prometheus.exporter.self "alloy_self" {
+}
+
+prometheus.scrape "alloy_self" {
+  targets    = prometheus.exporter.self.alloy_self.targets
+  forward_to = [prometheus.relabel.alloy_self_relabel.receiver]
+}
+
+prometheus.relabel "alloy_self_relabel" {
+  rule {
+    target_label = "job"
+    replacement  = "alloy"
+  }
+
+  rule {
+    target_label = "project"
+    replacement  = "selfhost-stack"
+  }
+
+  // Write to
+  forward_to = [helpers.for_host.publish_metrics]
+}
+
 logging {
   level  = "debug"
   format = "logfmt"
+
+  // Write to
+  forward_to = [loki.relabel.alloy_self_relabel.receiver]
+}
+
+loki.relabel "alloy_self_relabel" {
+  rule {
+    target_label = "job"
+    replacement  = "alloy"
+  }
+
+  rule {
+    target_label = "project" 
+    replacement  = "selfhost-stack"
+  }
+
+  // Write to
+  forward_to = [helpers.for_host.publish_logs]
 }
 
 livedebugging {
