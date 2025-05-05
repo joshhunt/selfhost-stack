@@ -17,6 +17,7 @@ include:
   - services/tautulli.yaml
   - services/docker-volume-backup.yaml
   - services/scraparr.yaml
+  - services/docker-exporter.yaml
 
 networks:
   sabnzbd:

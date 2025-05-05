@@ -1,0 +1,14 @@
+services:
+  docker-exporter:
+    container_name: docker-exporter
+    image: ghcr.io/davidborzek/docker-exporter:latest
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+    networks:
+      - traefik
+    ports:
+      - "16344:808080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
