@@ -3,8 +3,6 @@ services:
     container_name: docker-exporter
     image: ghcr.io/davidborzek/docker-exporter:latest
     environment:
-      - PUID=$PUID
-      - PGID=$PGID
       - TZ=$TZ
     networks:
       - traefik
