@@ -26,7 +26,7 @@ logging {
   format = "logfmt"
 
   // Write to
-  forward_to = [loki.relabel.alloy_self_relabel.receiver]
+  write_to = [loki.relabel.alloy_self_relabel.receiver]
 }
 
 loki.relabel "alloy_self_relabel" {
