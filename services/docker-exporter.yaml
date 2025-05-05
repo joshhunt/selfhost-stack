@@ -2,6 +2,7 @@ services:
   docker-exporter:
     container_name: docker-exporter
     image: ghcr.io/davidborzek/docker-exporter:latest
+    user: root
     environment:
       - TZ=$TZ
     networks:
