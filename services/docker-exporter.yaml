@@ -10,6 +10,7 @@ services:
       - "traefik.docker.network=traefik"
       - "traefik.http.routers.dockerexporter.entrypoints=websecure"
       - "traefik.http.routers.dockerexporter.rule=Host(`docker-exporter.trtr.co`)"
+      - "traefik.http.services.dockerexporter.loadbalancer.server.port=8080"
       - "com.centurylinklabs.watchtower.enable=true"
     networks:
       - traefik
