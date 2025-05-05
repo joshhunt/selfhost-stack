@@ -72,34 +72,24 @@ loki.source.docker "default" {
   forward_to = [helpers.for_host.publish_logs]
 }
 
-prometheus.exporter.cadvisor "docker_host" {
-  docker_host       = "unix:///var/run/docker.sock"
-  storage_duration  = "5m"
-}
-
-prometheus.scrape "docker_cadvisor" {
+prometheus.scrape "docker_exporter" {
   // Read from
-  targets = prometheus.exporter.cadvisor.docker_host.targets
+  targets = [{
+    __scheme__ = "https",
+    __address__ = "docker-exporter.trtr.co:443",
+    "job" = "docker-exporter",
+    "project" = "selfhost-stack",
+  }]
 
   // Write to
-  forward_to = [prometheus.relabel.docker_cadvisor_relabel.receiver]
+  forward_to = [prometheus.relabel.docker_exporter_relabel.receiver]
 }
 
-prometheus.relabel "docker_cadvisor_relabel" {
-  // rule {
-  //   action = "keep"
-  //   source_labels = ["__name__"]
-  //   regex = "up"
-  // }
-
-	rule {
-    target_label = "job"
-    replacement  = "docker_cadvisor"
-  }
-
+prometheus.relabel "docker_exporter_relabel" {
   rule {
-    target_label = "project"
-    replacement  = "selfhost-stack"
+    action = "replace"
+    source_labels = ["name"]
+    target_label = "service"
   }
 
   // Write to
