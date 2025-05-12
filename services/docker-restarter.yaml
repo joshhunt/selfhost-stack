@@ -1,0 +1,12 @@
+services:
+  docker-restarter:
+    container_name: docker-restarter
+    image: index.docker.io/deduard/tools:restart-notifier-latest
+    restart: unless-stopped
+    environment:
+      RESTART_CONTAINERS: "docker-exporter"
+      RUN_ON_STARTUP: "false"
+      CRON_SCHEDULE: "40 * * * *" # every hour
+      CYCLE_PERIOD: "10000" # 10 sec
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

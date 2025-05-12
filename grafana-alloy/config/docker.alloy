@@ -81,6 +81,8 @@ prometheus.scrape "docker_exporter" {
     "project" = "selfhost-stack",
   }]
 
+  scrape_interval = "1m"
+
   // Write to
   forward_to = [prometheus.relabel.docker_exporter_relabel.receiver]
 }
