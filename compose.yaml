@@ -18,6 +18,7 @@ include:
   - services/docker-volume-backup.yaml
   - services/scraparr.yaml
   - services/docker-exporter.yaml
+  - services/docker-restarter.yaml
 
 networks:
   sabnzbd:
