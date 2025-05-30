@@ -19,6 +19,7 @@ include:
   - services/scraparr.yaml
   - services/docker-exporter.yaml
   - services/docker-restarter.yaml
+  - services/immich.yaml
 
 networks:
   sabnzbd:
@@ -33,3 +34,5 @@ networks:
     name: prowlarr
   scraparr:
     name: scraparr
+  immich:
+    name: immich

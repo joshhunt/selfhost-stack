@@ -1,0 +1,68 @@
+services:
+  immich:
+    container_name: immich
+    image: ghcr.io/immich-app/immich-server:release
+    environment:
+      - TZ=${TZ}
+      - DB_HOSTNAME=immich-postgres
+      - DB_USERNAME=${IMMICH_DB_USERNAME}
+      - DB_PASSWORD=${IMMICH_DB_PASSWORD}
+      - DB_DATABASE_NAME=${IMMICH_DB_DATABASE_NAME}
+      - REDIS_HOSTNAME=immich-redis
+      - IMMICH_TELEMETRY_INCLUDE=all
+    volumes:
+      - ${IMMICH_UPLOAD_LOCATION}:/usr/src/app/upload
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - immich
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.routers.immich.entrypoints=websecure"
+      - "traefik.http.routers.immich.rule=Host(`immich.trtr.co`)"
+      - "com.centurylinklabs.watchtower.enable=true"
+      - "docker-volume-backup.stop-during-backup=true"
+    networks:
+      - immich
+    depends_on:
+      - immich-redis
+      - immich-postgres
+    restart: always
+    healthcheck:
+      disable: false
+
+  immich-redis:
+    container_name: immich-redis
+    image: docker.io/valkey/valkey:8-bookworm@sha256:ff21bc0f8194dc9c105b769aeabf9585fea6a8ed649c0781caeac5cb3c247884
+    environment:
+      - TZ=${TZ}
+    networks:
+      - immich
+    healthcheck:
+      test: redis-cli ping || exit 1
+    restart: always
+
+  immich-postgres:
+    container_name: immich-postgres
+    image: ghcr.io/immich-app/postgres:14-vectorchord0.3.0-pgvectors0.2.0@sha256:fa4f6e0971f454cd95fec5a9aaed2ed93d8f46725cc6bc61e0698e97dba96da1
+    environment:
+      - TZ=${TZ}
+      - POSTGRES_PASSWORD=${IMMICH_DB_PASSWORD}
+      - POSTGRES_USER=${IMMICH_DB_USERNAME}
+      - POSTGRES_DB=${IMMICH_DB_DATABASE_NAME}
+      - POSTGRES_INITDB_ARGS="--data-checksums"
+      - DB_STORAGE_TYPE="HDD"
+    volumes:
+      - immich-postgres-data:/var/lib/postgresql/data
+    networks:
+      - immich
+    labels:
+      - "docker-volume-backup.stop-during-backup=true"
+    restart: always
+
+volumes:
+  immich-postgres-data:
+
+networks:
+  immich:
