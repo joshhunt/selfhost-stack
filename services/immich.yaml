@@ -23,8 +23,6 @@ services:
       - "traefik.http.routers.immich.rule=Host(`immich.trtr.co`)"
       - "com.centurylinklabs.watchtower.enable=true"
       - "docker-volume-backup.stop-during-backup=true"
-    networks:
-      - immich
     depends_on:
       - immich-redis
       - immich-postgres
