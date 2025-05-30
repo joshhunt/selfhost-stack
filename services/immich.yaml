@@ -50,7 +50,7 @@ services:
       - POSTGRES_USER=${IMMICH_DB_USERNAME}
       - POSTGRES_DB=${IMMICH_DB_DATABASE_NAME}
       - POSTGRES_INITDB_ARGS="--data-checksums"
-      - DB_STORAGE_TYPE="HDD"
+      - DB_STORAGE_TYPE='HDD'
     volumes:
       - immich-postgres-data:/var/lib/postgresql/data
     networks:
