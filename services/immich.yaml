@@ -31,11 +31,15 @@ services:
       - "traefik.http.routers.immich-api-metrics.entrypoints=websecure"
       - "traefik.http.routers.immich-api-metrics.rule=Host(`immich.trtr.co`) && PathPrefix(`/metrics-api`)"
       - "traefik.http.routers.immich-api-metrics.service=immich-api-metrics"
+      - "traefik.http.routers.immich-api-metrics.middlewares=immich-api-metrics-stripprefix"
+      - "traefik.http.middlewares.immich-api-metrics-stripprefix.stripprefix.prefixes=/metrics-api"
       - "traefik.http.services.immich-api-metrics.loadbalancer.server.port=8081"
 
       - "traefik.http.routers.immich-microservices-metrics.entrypoints=websecure"
       - "traefik.http.routers.immich-microservices-metrics.rule=Host(`immich.trtr.co`) && PathPrefix(`/metrics-microservices`)"
       - "traefik.http.routers.immich-microservices-metrics.service=immich-microservices-metrics"
+      - "traefik.http.routers.immich-microservices-metrics.middlewares=immich-microservices-metrics-stripprefix"
+      - "traefik.http.middlewares.immich-microservices-metrics-stripprefix.stripprefix.prefixes=/metrics-microservices"
       - "traefik.http.services.immich-microservices-metrics.loadbalancer.server.port=8082"
 
       - "com.centurylinklabs.watchtower.enable=true"
