@@ -61,6 +61,3 @@ services:
 
 volumes:
   immich-postgres-data:
-
-networks:
-  immich:
