@@ -10,6 +10,8 @@ services:
       - DB_DATABASE_NAME=${IMMICH_DB_DATABASE_NAME}
       - REDIS_HOSTNAME=immich-redis
       - IMMICH_TELEMETRY_INCLUDE=all
+      - IMMICH_API_METRICS_PORT=8081
+      - IMMICH_MICROSERVICES_METRICS_PORT=8082
     volumes:
       - ${IMMICH_UPLOAD_LOCATION}:/usr/src/app/upload
       - /etc/localtime:/etc/localtime:ro
@@ -21,6 +23,15 @@ services:
       - "traefik.docker.network=traefik"
       - "traefik.http.routers.immich.entrypoints=websecure"
       - "traefik.http.routers.immich.rule=Host(`immich.trtr.co`)"
+
+      # Immich provides two prom /metrics paths on two other ports.
+      # We want to route them on subpaths of the immich.trtr.co domain
+      - "traefik.http.routers.immich-api-metrics.entrypoints=websecure"
+      - "traefik.http.routers.immich-api-metrics.rule=Host(`immich.trtr.co`) && PathPrefix(`/metrics-api`)"
+      - "traefik.http.services.immich-api-metrics.loadbalancer.server.port=8081"
+      - "traefik.http.routers.immich-microservices-metrics.entrypoints=websecure"
+      - "traefik.http.routers.immich-microservices-metrics.rule=Host(`immich.trtr.co`) && PathPrefix(`/metrics-microservices`)"
+      - "traefik.http.services.immich-microservices-metrics.loadbalancer.server.port=8082"
       - "com.centurylinklabs.watchtower.enable=true"
       - "docker-volume-backup.stop-during-backup=true"
     depends_on:
