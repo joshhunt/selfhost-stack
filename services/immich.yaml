@@ -29,17 +29,19 @@ services:
       # Immich provides two prom /metrics paths on two other ports.
       # We want to route them on subpaths of the immich.trtr.co domain
       - "traefik.http.routers.immich-api-metrics.entrypoints=websecure"
-      - "traefik.http.routers.immich-api-metrics.rule=Host(`immich.trtr.co`) && PathPrefix(`/metrics-api`)"
+      - "traefik.http.routers.immich-api-metrics.rule=Host(`immich.trtr.co`) && Path(`/metrics/api`)"
       - "traefik.http.routers.immich-api-metrics.service=immich-api-metrics"
-      - "traefik.http.routers.immich-api-metrics.middlewares=immich-api-metrics-stripprefix"
-      - "traefik.http.middlewares.immich-api-metrics-stripprefix.stripprefix.prefixes=/metrics-api"
+      - "traefik.http.routers.immich-api-metrics.middlewares=immich-api-metrics-replacepath"
+      - "traefik.http.middlewares.immich-api-metrics-replacepath.replacepathregex.regex=^/metrics/api$"
+      - "traefik.http.middlewares.immich-api-metrics-replacepath.replacepathregex.replacement=/metrics"
       - "traefik.http.services.immich-api-metrics.loadbalancer.server.port=8081"
 
       - "traefik.http.routers.immich-microservices-metrics.entrypoints=websecure"
-      - "traefik.http.routers.immich-microservices-metrics.rule=Host(`immich.trtr.co`) && PathPrefix(`/metrics-microservices`)"
+      - "traefik.http.routers.immich-microservices-metrics.rule=Host(`immich.trtr.co`) && Path(`/metrics/microservices`)"
       - "traefik.http.routers.immich-microservices-metrics.service=immich-microservices-metrics"
-      - "traefik.http.routers.immich-microservices-metrics.middlewares=immich-microservices-metrics-stripprefix"
-      - "traefik.http.middlewares.immich-microservices-metrics-stripprefix.stripprefix.prefixes=/metrics-microservices"
+      - "traefik.http.routers.immich-microservices-metrics.middlewares=immich-microservices-metrics-replacepath"
+      - "traefik.http.middlewares.immich-microservices-metrics-replacepath.replacepathregex.regex=^/metrics/microservices$"
+      - "traefik.http.middlewares.immich-microservices-metrics-replacepath.replacepathregex.replacement=/metrics"
       - "traefik.http.services.immich-microservices-metrics.loadbalancer.server.port=8082"
 
       - "com.centurylinklabs.watchtower.enable=true"
