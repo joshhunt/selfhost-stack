@@ -1,0 +1,31 @@
+prometheus.scrape "immich_api" {
+  // Read from
+  targets = [{
+    __scheme__ = "https",
+    __address__ = "immich.trtr.co:443",
+    "project" = "selfhost-stack",
+    "job" = "immich",
+    "service" = "immich-api",
+  }]
+
+  metrics_path = "/metrics/api"
+
+  // Write to
+  forward_to = [helpers.for_host.publish_metrics]
+}
+
+prometheus.scrape "immich_microservices" {
+  // Read from
+  targets = [{
+    __scheme__ = "https",
+    __address__ = "immich.trtr.co:443",
+    "project" = "selfhost-stack",
+    "job" = "immich",
+    "service" = "immich-microservices",
+  }]
+
+  metrics_path = "/metrics/microservices"
+
+  // Write to
+  forward_to = [helpers.for_host.publish_metrics]
+}
