@@ -23,15 +23,21 @@ services:
       - "traefik.docker.network=traefik"
       - "traefik.http.routers.immich.entrypoints=websecure"
       - "traefik.http.routers.immich.rule=Host(`immich.trtr.co`)"
+      - "traefik.http.routers.immich.service=immich"
+      - "traefik.http.services.immich.loadbalancer.server.port=2283"
 
       # Immich provides two prom /metrics paths on two other ports.
       # We want to route them on subpaths of the immich.trtr.co domain
       - "traefik.http.routers.immich-api-metrics.entrypoints=websecure"
       - "traefik.http.routers.immich-api-metrics.rule=Host(`immich.trtr.co`) && PathPrefix(`/metrics-api`)"
+      - "traefik.http.routers.immich-api-metrics.service=immich-api-metrics"
       - "traefik.http.services.immich-api-metrics.loadbalancer.server.port=8081"
+
       - "traefik.http.routers.immich-microservices-metrics.entrypoints=websecure"
       - "traefik.http.routers.immich-microservices-metrics.rule=Host(`immich.trtr.co`) && PathPrefix(`/metrics-microservices`)"
+      - "traefik.http.routers.immich-microservices-metrics.service=immich-microservices-metrics"
       - "traefik.http.services.immich-microservices-metrics.loadbalancer.server.port=8082"
+
       - "com.centurylinklabs.watchtower.enable=true"
       - "docker-volume-backup.stop-during-backup=true"
     depends_on:
