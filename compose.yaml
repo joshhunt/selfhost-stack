@@ -20,6 +20,7 @@ include:
   - services/docker-exporter.yaml
   - services/docker-restarter.yaml
   - services/immich.yaml
+  - services/postlog.yaml
 
 networks:
   sabnzbd:

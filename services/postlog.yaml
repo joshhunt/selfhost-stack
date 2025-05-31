@@ -1,0 +1,15 @@
+services:
+  postlog:
+    container_name: postlog
+    image: ghcr.io/joshhunt/postlog:latest
+    restart: unless-stopped
+    environment:
+      - TZ=$TZ
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.routers.postlog.entrypoints=websecure"
+      - "traefik.http.routers.postlog.rule=Host(`postlog.trtr.co`)"
+      - "com.centurylinklabs.watchtower.enable=true"
