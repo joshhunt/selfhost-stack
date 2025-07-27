@@ -11,5 +11,6 @@ services:
       - "traefik.http.routers.iperf-collector.entrypoints=websecure"
       - "traefik.http.routers.iperf-collector.rule=Host(`iperf-collector.trtr.co`)"
       - "com.centurylinklabs.watchtower.enable=true"
+      - "traefik.http.services.iperf-collector.loadbalancer.server.port=9030"
     networks:
       - traefik
