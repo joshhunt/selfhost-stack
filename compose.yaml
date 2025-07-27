@@ -21,7 +21,7 @@ include:
   - services/docker-restarter.yaml
   - services/immich.yaml
   - services/postlog.yaml
-  - services/iperf-prom.yaml
+  - services/iperf-collector.yaml
 
 networks:
   sabnzbd:
