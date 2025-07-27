@@ -1,0 +1,40 @@
+prometheus.scrape "iperf" {
+  // Read from
+  targets = [{
+    __scheme__ = "https",
+    __address__ = "iperf-collector.trtr.co:443",
+    "job" = "iperf",
+    "project" = "selfhost-stack",
+    "service" = "iperf",
+  }]
+
+  // Write to
+  forward_to = [prometheus.relabel.iperf_relabel.receiver]
+}
+
+prometheus.relabel "iperf_relabel" {
+  // rule {
+  //   source_labels = ["__name__"]
+  //   regex = "sonarr_.+"
+  //   target_label = "service"
+  //   replacement = "sonarr"
+  // }
+
+  // rule {
+  //   source_labels = ["__name__"]
+  //   regex = "radarr_.+"
+  //   target_label = "service"
+  //   replacement = "radarr"
+  // }
+
+  // rule {
+  //   source_labels = ["__name__"]
+  //   regex = "prowlarr_.+"
+  //   target_label = "service"
+  //   replacement = "prowlarr"
+  // }
+
+  // Write to
+  forward_to = [helpers.for_host.publish_metrics]
+}
+
