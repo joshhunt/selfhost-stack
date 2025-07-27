@@ -1,7 +1,7 @@
 services:
   iperf-collector:
     container_name: iperf-collector
-    image: ghcr.io/markormesher/iperf-prometheus-collector:VERSION
+    image: ghcr.io/markormesher/iperf-prometheus-collector:latest
     restart: unless-stopped
     environment:
       - TARGET_LIST=192.168.1.102
