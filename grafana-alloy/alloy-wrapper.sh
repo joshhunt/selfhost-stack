@@ -15,7 +15,3 @@ ALLOY_GRAFANA_CLOUD_TOKEN=$ALLOY_GRAFANA_CLOUD_TOKEN \
     run /Users/josh/selfhost-stack/grafana-alloy/config \
     --server.http.listen-addr=0.0.0.0:12345 \
     --storage.path=/opt/homebrew/var/lib/alloy/data
-
-
-
-    
