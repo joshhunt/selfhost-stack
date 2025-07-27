@@ -5,7 +5,7 @@ services:
     restart: unless-stopped
     environment:
       - TARGET_LIST=192.168.1.102,ping.online.net,speedtest.lon12.uk.leaseweb.net
-      - TEST_INTERVAL_MS=60000 # 60 seconds
+      - TEST_INTERVAL_MS=3600000 # 1 hour
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik"
