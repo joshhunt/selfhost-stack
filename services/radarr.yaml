@@ -6,6 +6,8 @@ services:
   radarr:
     container_name: radarr
     image: linuxserver/radarr:latest
+    ports:
+      - 7878:7878
     environment:
       - PUID=$PUID
       - PGID=$PGID
