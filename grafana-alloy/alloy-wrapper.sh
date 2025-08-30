@@ -11,6 +11,7 @@ ALLOY_LOKI_USER=$ALLOY_LOKI_USER \
 ALLOY_PROM_URL=$ALLOY_PROM_URL \
 ALLOY_PROM_USER=$ALLOY_PROM_USER \
 ALLOY_GRAFANA_CLOUD_TOKEN=$ALLOY_GRAFANA_CLOUD_TOKEN \
+ALLOY_UPTIME_KUMA_PASSWORD=$ALLOY_UPTIME_KUMA_PASSWORD \
 /opt/homebrew/opt/alloy/bin/alloy \
     run /Users/josh/selfhost-stack/grafana-alloy/config \
     --server.http.listen-addr=0.0.0.0:12345 \

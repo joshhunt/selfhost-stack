@@ -1,0 +1,23 @@
+prometheus.scrape "iperf" {
+  // Read from
+  targets = [{
+    __scheme__ = "https",
+    __address__ = "uptime-kuma.trtr.co:443",
+    "job" = "uptime-kuma",
+    "project" = "selfhost-stack",
+    "service" = "uptime-kuma",
+  }]
+
+  basic_auth {
+    password = sys.env("ALLOY_UPTIME_KUMA_PASSWORD")
+  }
+
+  // Write to
+  forward_to = [prometheus.relabel.uptime_kuma_relabel.receiver]
+}
+
+prometheus.relabel "uptime_kuma_relabel" {
+  // Write to
+  forward_to = [helpers.for_host.publish_metrics]
+}
+

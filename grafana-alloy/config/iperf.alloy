@@ -13,27 +13,6 @@ prometheus.scrape "iperf" {
 }
 
 prometheus.relabel "iperf_relabel" {
-  // rule {
-  //   source_labels = ["__name__"]
-  //   regex = "sonarr_.+"
-  //   target_label = "service"
-  //   replacement = "sonarr"
-  // }
-
-  // rule {
-  //   source_labels = ["__name__"]
-  //   regex = "radarr_.+"
-  //   target_label = "service"
-  //   replacement = "radarr"
-  // }
-
-  // rule {
-  //   source_labels = ["__name__"]
-  //   regex = "prowlarr_.+"
-  //   target_label = "service"
-  //   replacement = "prowlarr"
-  // }
-
   // Write to
   forward_to = [helpers.for_host.publish_metrics]
 }
