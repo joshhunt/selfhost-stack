@@ -1,0 +1,23 @@
+services:
+  uptime-kuma:
+    container_name: uptime-kuma
+    image: louislam/uptime-kuma:1
+    ports:
+      - 3001:3001
+    environment:
+      - TZ=$TZ
+    volumes:
+      - uptime-kuma-data:/app/data
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.routers.uptime-kuma.entrypoints=websecure"
+      - "traefik.http.routers.uptime-kuma.rule=Host(`uptime-kuma.trtr.co`)"
+      - "com.centurylinklabs.watchtower.enable=true"
+      - "docker-volume-backup.stop-during-backup=true"
+    restart: always
+
+volumes:
+  uptime-kuma-data
