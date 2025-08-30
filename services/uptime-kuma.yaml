@@ -20,4 +20,4 @@ services:
     restart: always
 
 volumes:
-  uptime-kuma-data
+  uptime-kuma-data:
