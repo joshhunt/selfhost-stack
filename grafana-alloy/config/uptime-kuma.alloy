@@ -1,4 +1,4 @@
-prometheus.scrape "iperf" {
+prometheus.scrape "uptime_kuma" {
   // Read from
   targets = [{
     __scheme__ = "https",
