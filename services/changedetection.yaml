@@ -1,4 +1,3 @@
-# Not currently in use
 services:
   changedetection:
     image: lscr.io/linuxserver/changedetection.io:latest
@@ -9,12 +8,9 @@ services:
       - TZ=$TZ
       # - PLAYWRIGHT_DRIVER_URL= #optional
     volumes:
-      - $CONFIG_PATH/changedetection/config:/config
+      - changedetection-data:/config
     networks:
-      - sabnzbd
       - traefik
-      - overseerr
-      - bazarr
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik"
@@ -22,3 +18,6 @@ services:
       - "traefik.http.routers.changedetection.rule=Host(`changedetection.trtr.co`)"
       - "com.centurylinklabs.watchtower.enable=true"
     restart: unless-stopped
+
+volumes:
+  changedetection-data:
