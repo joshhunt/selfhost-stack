@@ -1,0 +1,15 @@
+otelcol.receiver.otlp "default" {
+	grpc {
+		endpoint = "127.0.0.1:4317"
+	}
+
+	http {
+		endpoint = "127.0.0.1:4318"
+	}
+
+	output {
+		// metrics = [otelcol.processor.batch.default.input]
+		// logs    = [otelcol.processor.batch.default.input]
+		traces = [helpers.for_host.publish_traces]
+	}
+}

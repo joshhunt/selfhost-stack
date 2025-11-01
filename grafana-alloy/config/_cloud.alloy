@@ -1,19 +1,33 @@
 loki.write "grafana_cloud" {
-    endpoint {
-        url = sys.env("ALLOY_LOKI_URL")
-        basic_auth {
-            username = sys.env("ALLOY_LOKI_USER")
-            password = sys.env("ALLOY_GRAFANA_CLOUD_TOKEN")
-        }
-    }
+	endpoint {
+		url = sys.env("ALLOY_LOKI_URL")
+
+		basic_auth {
+			username = sys.env("ALLOY_LOKI_USER")
+			password = sys.env("ALLOY_GRAFANA_CLOUD_TOKEN")
+		}
+	}
 }
 
 prometheus.remote_write "grafana_cloud" {
-    endpoint {
-        url = sys.env("ALLOY_PROM_URL")
-        basic_auth {
-            username = sys.env("ALLOY_PROM_USER")
-            password = sys.env("ALLOY_GRAFANA_CLOUD_TOKEN")
-        }
-    }
+	endpoint {
+		url = sys.env("ALLOY_PROM_URL")
+
+		basic_auth {
+			username = sys.env("ALLOY_PROM_USER")
+			password = sys.env("ALLOY_GRAFANA_CLOUD_TOKEN")
+		}
+	}
+}
+
+otelcol.exporter.otlp "grafana_cloud_traces" {
+	client {
+		endpoint = sys.env("ALLOY_OTLP_URL")
+		auth     = otelcol.auth.basic.grafana_cloud_traces.handler
+	}
+}
+
+otelcol.auth.basic "grafana_cloud_traces" {
+	username = sys.env("ALLOY_OTEL_USER")
+	password = sys.env("ALLOY_GRAFANA_CLOUD_TOKEN")
 }

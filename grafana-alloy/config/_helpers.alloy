@@ -1,52 +1,89 @@
 // Scrapers and tail-ers send metrics to these components, which standardise them across everything
 // before sending them to Grafana Cloud
 
-
-
 declare "helpers" {
-    argument "instance" {
-        optional = false
-    }
+	argument "instance" {
+		optional = false
+	}
 
-    argument "send_metrics_to" {
-        optional = false
-    }
+	argument "send_metrics_to" {
+		optional = false
+	}
 
-    argument "send_logs_to" {
-        optional = false
-    }
+	argument "send_logs_to" {
+		optional = false
+	}
 
-    prometheus.relabel "metrics_for_host" {
-        rule {
-            target_label = "instance"
-            replacement = argument.instance.value
-        }
+	argument "send_otel_traces_to" {
+		optional = false
+	}
 
-        // Write to
-        forward_to = [argument.send_metrics_to.value]
-    }
+	//
+	// --- Metrics ---
+	//
+	export "publish_metrics" {
+		value = prometheus.relabel.metrics_for_host.receiver
+	}
 
-    loki.relabel "logs_for_host" {
-        rule {
-            target_label = "instance"
-            replacement = argument.instance.value
-        }
+	prometheus.relabel "metrics_for_host" {
+		rule {
+			target_label = "instance"
+			replacement  = argument.instance.value
+		}
 
-        // Write to
-        forward_to = [argument.send_logs_to.value]
-    }
+		// Write to
+		forward_to = [argument.send_metrics_to.value]
+	}
 
-    export "publish_metrics" {
-        value = prometheus.relabel.metrics_for_host.receiver
-    }
+	//
+	// --- Logs ---
+	//
+	export "publish_logs" {
+		value = loki.relabel.logs_for_host.receiver
+	}
 
-    export "publish_logs" {
-        value = loki.relabel.logs_for_host.receiver
-    }
+	loki.relabel "logs_for_host" {
+		rule {
+			target_label = "instance"
+			replacement  = argument.instance.value
+		}
+
+		// Write to
+		forward_to = [argument.send_logs_to.value]
+	}
+
+	//
+	// --- Logs ---
+	//
+	export "publish_traces" {
+		value = otelcol.processor.transform.traces_for_host.input
+	}
+
+	otelcol.processor.transform "traces_for_host" {
+		error_mode = "ignore"
+
+		trace_statements {
+			context    = "resource"
+			statements = [
+				`set(attributes["instance"], "` + argument.instance.value + `")`,
+			]
+		}
+
+		output {
+			traces = [otelcol.processor.batch.batch_traces.input] // send to batch, then grafana cloud cloud
+		}
+	}
+
+	otelcol.processor.batch "batch_traces" {
+		output {
+			traces = [argument.send_otel_traces_to.value]
+		}
+	}
 }
 
 helpers "for_host" {
-    instance = "trevor"
-    send_metrics_to = prometheus.remote_write.grafana_cloud.receiver
-    send_logs_to = loki.write.grafana_cloud.receiver
+	instance            = "trevor"
+	send_metrics_to     = prometheus.remote_write.grafana_cloud.receiver
+	send_logs_to        = loki.write.grafana_cloud.receiver
+	send_otel_traces_to = otelcol.exporter.otlp.grafana_cloud_traces.input
 }
