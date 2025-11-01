@@ -15,3 +15,12 @@ services:
       - "--interval=3600"
       - "--label-enable"
       - "--cleanup"
+      - "--http-api-periodic-polls"
+      - "--http-api-update"
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.routers.watchtower.entrypoints=websecure"
+      - "traefik.http.routers.watchtower.rule=Host(`watchtower.trtr.co`)"
