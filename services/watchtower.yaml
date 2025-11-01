@@ -9,6 +9,7 @@ services:
       - PUID=$PUID
       - PGID=$PGID
       - TZ=$TZ
+      - WATCHTOWER_HTTP_API_TOKEN=insecure-token
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     command:
