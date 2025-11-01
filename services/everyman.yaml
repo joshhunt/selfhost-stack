@@ -9,6 +9,7 @@ services:
       - PUID=$PUID
       - PGID=$PGID
       - TZ=$TZ
+      - OTEL_EXPORTER_OTLP_ENDPOINT="http://host.docker.internal:4318"
     networks:
       - traefik
     labels:
