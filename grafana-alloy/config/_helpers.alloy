@@ -85,5 +85,5 @@ helpers "for_host" {
 	instance            = "trevor"
 	send_metrics_to     = prometheus.remote_write.grafana_cloud.receiver
 	send_logs_to        = loki.write.grafana_cloud.receiver
-	send_otel_traces_to = otelcol.exporter.otlp.grafana_cloud_traces.input
+	send_otel_traces_to = otelcol.exporter.otlphttp.grafana_cloud_traces.input
 }

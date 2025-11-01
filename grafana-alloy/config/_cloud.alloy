@@ -20,7 +20,7 @@ prometheus.remote_write "grafana_cloud" {
 	}
 }
 
-otelcol.exporter.otlp "grafana_cloud_traces" {
+otelcol.exporter.otlphttp "grafana_cloud_traces" {
 	client {
 		endpoint = sys.env("ALLOY_OTLP_URL")
 		auth     = otelcol.auth.basic.grafana_cloud_traces.handler

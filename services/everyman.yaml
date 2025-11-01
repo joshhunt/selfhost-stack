@@ -10,7 +10,7 @@ services:
       - PGID=$PGID
       - TZ=$TZ
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://host.docker.internal:4318
-      - OTEL_LOG_LEVEL=debug
+      # - OTEL_LOG_LEVEL=debug
     networks:
       - traefik
     labels:
