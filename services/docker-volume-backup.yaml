@@ -20,6 +20,6 @@ services:
       - sonarr-config:/backup/sonarr-config:ro
       - sabnzbd-config:/backup/sabnzbd-config:ro
       - tautulli-config:/backup/tautulli-config:ro
-      - immich-postgres-data:/backup/immich-postgres-data:ro
+      # - immich-postgres-data:/backup/immich-postgres-data:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - $CONFIG_PATH/id_ed25519:/root/.ssh/id_ed25519
