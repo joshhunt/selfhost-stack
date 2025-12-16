@@ -15,7 +15,7 @@ include:
   - services/watchtower.yaml
   - services/everyman.yaml # migrated
   - services/tautulli.yaml
-  - services/docker-volume-backup.yaml
+  # - services/docker-volume-backup.yaml
   - services/scraparr.yaml
   - services/docker-exporter.yaml
   - services/docker-restarter.yaml
