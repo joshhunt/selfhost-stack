@@ -16,7 +16,7 @@ include:
   - services/everyman.yaml # migrated
   - services/tautulli.yaml
   # - services/docker-volume-backup.yaml
-  - services/scraparr.yaml
+  # - services/scraparr.yaml
   - services/docker-exporter.yaml
   - services/docker-restarter.yaml
   # - services/immich.yaml  # migrated
