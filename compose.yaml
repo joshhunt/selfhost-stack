@@ -6,10 +6,10 @@ include:
   - services/changedetection.yaml
   - services/adguardhome.yaml # migrated
   - services/bazarr.yaml
-  - services/prowlarr.yaml
-  - services/radarr.yaml
+  # - services/prowlarr.yaml
+  # - services/radarr.yaml
   - services/sabnzbd.yaml
-  - services/sonarr.yaml
+  # - services/sonarr.yaml
   - services/traefik.yaml
   - services/whoami.yaml
   - services/watchtower.yaml
